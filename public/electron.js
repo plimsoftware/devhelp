@@ -6,11 +6,14 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 
 let mainWindow;
+let addTopicWindow;
+let addTopicMenu = null;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
       width: 900,
       height: 680,
+      title: 'Developer Help',
       webPreferences: {
         nodeIntegration: true
     }
@@ -24,6 +27,33 @@ function createWindow() {
 
   const mainMenu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(mainMenu);
+}
+
+function createAddTopicWindow() {
+    addTopicWindow = new BrowserWindow({
+      width: 400,
+      height: 600,
+      minWidth: 300,
+      minHeight: 100,
+      title: 'Add Topic',
+      icon: path.join(__dirname, './favicon.ico'),
+      webPreferences: {
+        nodeIntegration: true,
+        preload: path.join(__dirname, './preload.js'),
+      }
+    });
+  
+    addTopicWindow.loadURL(
+        isDev
+        ? `http://localhost:3000/addtopic`
+        : `file://${path.join(__dirname, `../build/index.html#/addtopic`)}`
+    );
+  
+    if (process.platform !== 'darwin') {
+        addTopicWindow.setMenu(addTopicMenu);
+    }
+  
+    addTopicWindow.on("closed", () => (addTopicWindow = null));
 }
 
 app.on("ready", createWindow);
@@ -41,14 +71,13 @@ app.on('activate', () => {
 });
 
 const menuTemplate = [
-    // {}, No MacOS acrescenta-se esta linha vazia extra
     {
         label: 'Menu',
         submenu: [
             {
                 label: 'Insert Topic',
                 click() {
-                    
+                    createAddTopicWindow();
                 }
             },
             {
@@ -62,19 +91,15 @@ const menuTemplate = [
     }
 ];
 
-if (process.platform === 'darwin') {  //Usando a variável de sistema do node, podemos verificar qual o OS que está a correr
-    menuTemplate.unshift({});         // Se for MacOS acrescenta {} no template7
+if (process.platform === 'darwin') {  
+    menuTemplate.unshift({});        
 }
 
 if (process.env.NODE_ENV !== 'production') {
-    //development
-    //production
-    //test... etc
-
     const devTemplate = {
         label: 'Dev',
         submenu: [
-            { role: 'reload' },  //Com esta funcionalidade do electron não precisamos de indicar label, accelerator, click
+            { role: 'reload' },  
             {
                 label: 'Debug',
                 accelerator: process.platform === 'win32' ? 'Ctrl+Shift+I' : 'Cmd+Alt+I',
@@ -86,7 +111,7 @@ if (process.env.NODE_ENV !== 'production') {
     };
 
     menuTemplate.push(devTemplate);
-    /*if (process.platform !== 'darwin') {
-        commentMenu = Menu.buildFromTemplate([devTemplate]);
-    }*/
+    if (process.platform !== 'darwin') {
+        addTopicMenu = Menu.buildFromTemplate([devTemplate]);
+    }
 }
