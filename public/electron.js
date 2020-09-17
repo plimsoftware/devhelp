@@ -1,6 +1,6 @@
 const electron = require('electron');
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -31,15 +31,17 @@ function createWindow() {
 
 function createAddTopicWindow() {
     addTopicWindow = new BrowserWindow({
-      width: 400,
-      height: 600,
-      minWidth: 300,
-      minHeight: 100,
+      width: 340,
+      height: 160,
+      minWidth: 340,
+      minHeight: 160,
+      parent: mainWindow, // This to disable mainwindow when addtopic open
+      modal: true,        // This to disable mainwindow when addtopic open
       title: 'Add Topic',
       icon: path.join(__dirname, './favicon.ico'),
       webPreferences: {
         nodeIntegration: true,
-        preload: path.join(__dirname, './preload.js'),
+        //preload: path.join(__dirname, './preload.js'),
       }
     });
   
@@ -68,6 +70,15 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.on('closeAddTopic', (event, arg) => {
+  addTopicWindow.close();
+});
+
+ipcMain.on('addTopic', (event, arg) => {
+  addTopicWindow.close();
+  mainWindow.webContents.send('addButtonTopic', arg);
 });
 
 const menuTemplate = [
@@ -112,6 +123,6 @@ if (process.env.NODE_ENV !== 'production') {
 
     menuTemplate.push(devTemplate);
     if (process.platform !== 'darwin') {
-        addTopicMenu = Menu.buildFromTemplate([devTemplate]);
+        // addTopicMenu = Menu.buildFromTemplate([devTemplate]);
     }
 }
