@@ -10,6 +10,7 @@ export const Container = styled.section`
 
     .left {
       left: 0;
+      height: 90%;
       width: 180px;
       background-color: black;
     }

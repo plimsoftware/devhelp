@@ -1,9 +1,11 @@
 const electron = require('electron');
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
-
 const path = require('path');
 const isDev = require('electron-is-dev');
+const db = require('./db/stores/topicItem');
+
+global.db = db;
 
 let mainWindow;
 let addTopicWindow;
@@ -18,7 +20,7 @@ function createWindow() {
         nodeIntegration: true
     }
     });
-  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`);
   
   mainWindow.on('close', () => {
     app.quit();
@@ -48,7 +50,7 @@ function createAddTopicWindow() {
     addTopicWindow.loadURL(
         isDev
         ? `http://localhost:3000/addtopic`
-        : `file://${path.join(__dirname, `../build/index.html#/addtopic`)}`
+        : `file://${__dirname}/index.html#/addtopic`
     );
   
     if (process.platform !== 'darwin') {
@@ -123,6 +125,6 @@ if (process.env.NODE_ENV !== 'production') {
 
     menuTemplate.push(devTemplate);
     if (process.platform !== 'darwin') {
-        // addTopicMenu = Menu.buildFromTemplate([devTemplate]);
+        addTopicMenu = Menu.buildFromTemplate([devTemplate]);
     }
 }
