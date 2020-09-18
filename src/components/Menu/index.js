@@ -7,36 +7,41 @@ const { ipcRenderer, remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
 
 
-export default function Menu({ setPage }) {
+export default function Menu({ setPage, setCategory }) {
   const [myTopics, setMyTopics] = useState([]);
   
   useEffect(() => {
 
-    dbInstance.readAll()
+    dbInstance.readBT()
       .then(allTopiclists => {
-        console.log(allTopiclists);
-          setMyTopics(allTopiclists);
+        setMyTopics(allTopiclists);
       })
 
       ipcRenderer.on('addButtonTopic', (event, arg) => {
-        const myButton = document.createElement('button');
-        myButton.textContent = arg;
-        document.getElementById('mytopics').append(myButton);
-    
-        dbInstance.create({topic: arg})
+   
+        dbInstance.create({
+          topictype: 'bt',
+          topictext: arg,
+          topicgroup:''
+        })
+        
+        window.location.reload(false);
       });  
 
   }, []);
 
 
-  
+  const handleClick = ((category) => {
+    setCategory(category);
+    setPage('ListTopics');
+  })
 
    return (
         <Container>
           <div id="mytopics">
             {myTopics.length !== 0 ? (
               myTopics.map((topic) => (
-                <button type="button" key={topic._id}>{topic.topic}</button>
+                <button type="button" key={topic._id} onClick={() => handleClick(topic.topictext)}>{topic.topictext}</button>
               )) ) :
             (
               <div></div>

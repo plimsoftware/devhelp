@@ -13,7 +13,7 @@ class TopicItemStore {
 
         this.schemaValidator = ajv.compile(topicItemSchema);
 
-        const dbPath = `${app.getPath('userData')}/topiclist.db`;
+        const dbPath = `${app.getPath('userData')}/devhelp.db`;
         this.db = Datastore.create({
             filename: dbPath,
             timestampData: true,
@@ -39,9 +39,9 @@ class TopicItemStore {
         return this.db.find()
     }
 
-    /*readActive() {
-        return this.db.find({isDone: false}).exec();
-    }*/
+    readBT() {
+        return this.db.find({topictype: 'bt'}).exec();
+    }
 
     /*archive({_id}) {
         return this.db.update({_id}, {$set: {isDone: true}})

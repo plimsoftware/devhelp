@@ -88,12 +88,6 @@ const menuTemplate = [
         label: 'Menu',
         submenu: [
             {
-                label: 'Insert Topic',
-                click() {
-                    createAddTopicWindow();
-                }
-            },
-            {
                 label: 'Exit',
                 accelerator: process.platform === 'win32' ? 'Alt+F4' : 'Cmd+Q',
                 click() {
@@ -101,7 +95,19 @@ const menuTemplate = [
                 }
             }
         ]
-    }
+    },
+    {
+      label: 'Category',
+      submenu: [
+          {
+              label: 'Insert Category',
+              accelerator: 'Ctrl+I',
+              click() {
+                  createAddTopicWindow();
+              }
+          }
+      ]
+  }
 ];
 
 if (process.platform === 'darwin') {  

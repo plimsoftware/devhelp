@@ -6,9 +6,9 @@ export default function ListCases() {
   
     return (
       <MainContainer>
-        <fieldset>
-         <legend><strong>Tasks (my teams)</strong></legend>
-        </fieldset>
+        <h1>Welcome to Developer Help</h1>
+        <h2>Version 1.0.0</h2>
+        <h3>Developeb by Luís Fernandes</h3>
       </MainContainer>
     );
 }

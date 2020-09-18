@@ -3,21 +3,24 @@ import React, { useState } from 'react';
 import { Container} from './styled';
 import Menu from '../../components/Menu';
 import ListCases from '../../components/ListCases';
+import ListTopics from '../../components/ListTopics';
 import Header from '../../components/Header';
 
 export default function Main() {
     const [currentPage, setCurrentPage] = useState('Home');
+    const [category, setCategory] = useState('');
 
     return (
         <Container>
         <Header />
             <div className="split left">
                 <div className="centered">
-                    <Menu setPage={(page) => setCurrentPage(page)} />
+                    <Menu setPage={(page) => setCurrentPage(page)} setCategory={(category) => setCategory(category)}/>
                 </div>
             </div>
             <div className="split right">
                 {currentPage === 'Home'? <ListCases /> : <></>}
+                {currentPage === 'ListTopics'? <ListTopics category={category}/> : <></>}
             </div>
         </Container>
 

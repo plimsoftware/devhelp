@@ -1,9 +1,15 @@
 const topicItemSchema = {
     type: 'object',
     properties: {
-      topic: {
+      topictype: {
         type: 'string',
-      }
+      },
+      topictext: {
+        type: 'string',
+      },
+      topicgroup: {
+        type: 'string',
+      },
     },
   };
   
