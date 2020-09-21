@@ -43,6 +43,13 @@ class TopicItemStore {
         return this.db.find({topictype: 'bt'}).exec();
     }
 
+    readTopic(category) {
+        return this.db.find({
+            topictype: 'topic',
+            topicgroup: category,
+        }).exec();
+    }
+
     /*archive({_id}) {
         return this.db.update({_id}, {$set: {isDone: true}})
     }*/

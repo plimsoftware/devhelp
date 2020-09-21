@@ -32,8 +32,10 @@ export default function Menu({ setPage, setCategory }) {
 
 
   const handleClick = ((category) => {
+    console.log(category);
     setCategory(category);
     setPage('ListTopics');
+    ipcRenderer.send('activateTopicMenu', '');
   })
 
    return (

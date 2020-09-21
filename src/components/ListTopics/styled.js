@@ -15,9 +15,12 @@ div {
 button {
     margin-top: 5px;
     width: 98%;
+    height: 30px;
+    padding-left: 10px;
     border-radius: 10px;
     background-color: #3E2776;
     color: white;
+    text-align: left;
   }
 
 `;

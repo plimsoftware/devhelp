@@ -9,7 +9,9 @@ global.db = db;
 
 let mainWindow;
 let addCategoryWindow;
+let addTopicWindow;
 let addCategoryMenu = null;
+let topicMenuActive = false;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -60,6 +62,35 @@ function createAddCategoryWindow() {
     addCategoryWindow.on("closed", () => (addCategoryWindow = null));
 }
 
+function createAddTopicWindow() {
+  addTopicWindow = new BrowserWindow({
+    width: 340,
+    height: 160,
+    minWidth: 340,
+    minHeight: 160,
+    parent: mainWindow, // This to disable mainwindow when addtopic open
+    modal: true,        // This to disable mainwindow when addtopic open
+    title: 'Add Topic',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+      //preload: path.join(__dirname, './preload.js'),
+    }
+  });
+
+  addTopicWindow.loadURL(
+      isDev
+      ? `http://localhost:3000/addtopic`
+      : `file://${__dirname}/index.html#/addtopic`
+  );
+
+  if (process.platform !== 'darwin') {
+    addTopicWindow.setMenu(addCategoryMenu);
+  }
+
+  addTopicWindow.on("closed", () => (addTopicWindow = null));
+}
+
 app.on("ready", createWindow);
 
 app.on('window-all-closed', () => {
@@ -78,9 +109,22 @@ ipcMain.on('closeAddCategory', (event, arg) => {
   addCategoryWindow.close();
 });
 
+ipcMain.on('closeAddTopic', (event, arg) => {
+  addTopicWindow.close();
+});
+
+ipcMain.on('activateTopicMenu', (event, arg) => {
+  topicMenuActive = true;
+});
+
 ipcMain.on('addCategory', (event, arg) => {
   addCategoryWindow.close();
   mainWindow.webContents.send('addButtonCategory', arg);
+});
+
+ipcMain.on('addTopic', (event, arg) => {
+  addTopicWindow.close();
+  mainWindow.webContents.send('addButtonTopic', arg);
 });
 
 const menuTemplate = [
@@ -113,7 +157,7 @@ const menuTemplate = [
         {
             label: 'Insert Topic',
             click() {
-               
+              if (topicMenuActive) createAddTopicWindow();
             }
         }
     ]
