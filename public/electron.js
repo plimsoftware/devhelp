@@ -12,6 +12,7 @@ let addCategoryWindow;
 let addTopicWindow;
 let addCategoryMenu = null;
 let topicMenuActive = false;
+let currentCat = '';
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -115,16 +116,30 @@ ipcMain.on('closeAddTopic', (event, arg) => {
 
 ipcMain.on('activateTopicMenu', (event, arg) => {
   topicMenuActive = true;
+  currentCat = arg;
 });
 
 ipcMain.on('addCategory', (event, arg) => {
   addCategoryWindow.close();
-  mainWindow.webContents.send('addButtonCategory', arg);
+
+  db.create({
+    topictype: 'bt',
+    topictext: arg,
+    topicgroup:''
+  });
+
+  mainWindow.reload();
 });
 
 ipcMain.on('addTopic', (event, arg) => {
+  db.create({
+    topictype: 'topic',
+    topictext: arg.text,
+    topicgroup: currentCat
+  });
+
   addTopicWindow.close();
-  mainWindow.webContents.send('addButtonTopic', arg);
+  mainWindow.reload();
 });
 
 const menuTemplate = [

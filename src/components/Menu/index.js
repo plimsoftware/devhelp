@@ -17,25 +17,13 @@ export default function Menu({ setPage, setCategory }) {
         setMyCategory(allCategorylists);
       })
 
-      ipcRenderer.on('addButtonCategory', (event, arg) => {
-   
-        dbInstance.create({
-          topictype: 'bt',
-          topictext: arg,
-          topicgroup:''
-        })
-        
-        window.location.reload(false);
-      });  
-
   }, []);
 
 
   const handleClick = ((category) => {
-    console.log(category);
     setCategory(category);
     setPage('ListTopics');
-    ipcRenderer.send('activateTopicMenu', '');
+    ipcRenderer.send('activateTopicMenu', category);
   })
 
    return (

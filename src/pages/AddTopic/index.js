@@ -13,7 +13,7 @@ const handleExit = () => {
 
 const handleSubmit = () => {
     if (topicText === '') return;
-    ipcRenderer.send('addTopic', topicText);
+    ipcRenderer.send('addTopic', {text: topicText});
 }
     return (
         <Container>
