@@ -8,8 +8,8 @@ const db = require('./db/stores/topicItem');
 global.db = db;
 
 let mainWindow;
-let addTopicWindow;
-let addTopicMenu = null;
+let addCategoryWindow;
+let addCategoryMenu = null;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -31,15 +31,15 @@ function createWindow() {
   Menu.setApplicationMenu(mainMenu);
 }
 
-function createAddTopicWindow() {
-    addTopicWindow = new BrowserWindow({
+function createAddCategoryWindow() {
+    addCategoryWindow = new BrowserWindow({
       width: 340,
       height: 160,
       minWidth: 340,
       minHeight: 160,
       parent: mainWindow, // This to disable mainwindow when addtopic open
       modal: true,        // This to disable mainwindow when addtopic open
-      title: 'Add Topic',
+      title: 'Add Category',
       icon: path.join(__dirname, './favicon.ico'),
       webPreferences: {
         nodeIntegration: true,
@@ -47,17 +47,17 @@ function createAddTopicWindow() {
       }
     });
   
-    addTopicWindow.loadURL(
+    addCategoryWindow.loadURL(
         isDev
-        ? `http://localhost:3000/addtopic`
-        : `file://${__dirname}/index.html#/addtopic`
+        ? `http://localhost:3000/addcategory`
+        : `file://${__dirname}/index.html#/addcategory`
     );
   
     if (process.platform !== 'darwin') {
-        addTopicWindow.setMenu(addTopicMenu);
+        addCategoryWindow.setMenu(addCategoryMenu);
     }
   
-    addTopicWindow.on("closed", () => (addTopicWindow = null));
+    addCategoryWindow.on("closed", () => (addCategoryWindow = null));
 }
 
 app.on("ready", createWindow);
@@ -74,13 +74,13 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('closeAddTopic', (event, arg) => {
-  addTopicWindow.close();
+ipcMain.on('closeAddCategory', (event, arg) => {
+  addCategoryWindow.close();
 });
 
-ipcMain.on('addTopic', (event, arg) => {
-  addTopicWindow.close();
-  mainWindow.webContents.send('addButtonTopic', arg);
+ipcMain.on('addCategory', (event, arg) => {
+  addCategoryWindow.close();
+  mainWindow.webContents.send('addButtonCategory', arg);
 });
 
 const menuTemplate = [
@@ -101,13 +101,23 @@ const menuTemplate = [
       submenu: [
           {
               label: 'Insert Category',
-              accelerator: 'Ctrl+I',
               click() {
-                  createAddTopicWindow();
+                createAddCategoryWindow();
               }
           }
       ]
-  }
+  },
+  {
+    label: 'Topic',
+    submenu: [
+        {
+            label: 'Insert Topic',
+            click() {
+               
+            }
+        }
+    ]
+}
 ];
 
 if (process.platform === 'darwin') {  
@@ -131,6 +141,6 @@ if (process.env.NODE_ENV !== 'production') {
 
     menuTemplate.push(devTemplate);
     if (process.platform !== 'darwin') {
-        addTopicMenu = Menu.buildFromTemplate([devTemplate]);
+        addCategoryMenu = Menu.buildFromTemplate([devTemplate]);
     }
 }

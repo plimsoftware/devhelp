@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Container} from './styled';
 import Menu from '../../components/Menu';
-import ListCases from '../../components/ListCases';
+import Welcome from '../../components/Welcome';
 import ListTopics from '../../components/ListTopics';
 import Header from '../../components/Header';
 
@@ -19,7 +19,7 @@ export default function Main() {
                 </div>
             </div>
             <div className="split right">
-                {currentPage === 'Home'? <ListCases /> : <></>}
+                {currentPage === 'Home'? <Welcome /> : <></>}
                 {currentPage === 'ListTopics'? <ListTopics category={category}/> : <></>}
             </div>
         </Container>

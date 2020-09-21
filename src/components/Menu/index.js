@@ -8,16 +8,16 @@ const dbInstance = remote.getGlobal('db');
 
 
 export default function Menu({ setPage, setCategory }) {
-  const [myTopics, setMyTopics] = useState([]);
+  const [myCategory, setMyCategory] = useState([]);
   
   useEffect(() => {
 
     dbInstance.readBT()
-      .then(allTopiclists => {
-        setMyTopics(allTopiclists);
+      .then(allCategorylists => {
+        setMyCategory(allCategorylists);
       })
 
-      ipcRenderer.on('addButtonTopic', (event, arg) => {
+      ipcRenderer.on('addButtonCategory', (event, arg) => {
    
         dbInstance.create({
           topictype: 'bt',
@@ -39,8 +39,8 @@ export default function Menu({ setPage, setCategory }) {
    return (
         <Container>
           <div id="mytopics">
-            {myTopics.length !== 0 ? (
-              myTopics.map((topic) => (
+            {myCategory.length !== 0 ? (
+              myCategory.map((topic) => (
                 <button type="button" key={topic._id} onClick={() => handleClick(topic.topictext)}>{topic.topictext}</button>
               )) ) :
             (
