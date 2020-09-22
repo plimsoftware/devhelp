@@ -50,9 +50,37 @@ class TopicItemStore {
         }).exec();
     }
 
-    /*archive({_id}) {
-        return this.db.update({_id}, {$set: {isDone: true}})
-    }*/
+    deleteTopics(category) {
+        return this.db.remove({
+            topicgroup: category,
+        },
+        { multi: true});
+    }
+
+    deleteTopic(_id) {
+        return this.db.remove({
+            _id,
+        });
+    }
+
+    deleteCategory(category) {
+        return this.db.remove({
+            topictype:'bt',
+            topictext:category,
+        });
+    }
+
+    updateCat(topic) {
+        return this.db.update({_id: topic._id}, {$set: {topictext: topic.topictext}});
+    }
+
+    updateTopic(topic) {
+        return this.db.update({_id: topic._id}, {$set: {topictext: topic.topictext}});
+    }
+
+    updateTopicCat(topic) {
+        return this.db.update({topicgroup: topic.oldtext}, {$set: {topicgroup: topic.topictext}}, { multi: true });
+    }
 }
 
 module.exports = new TopicItemStore();

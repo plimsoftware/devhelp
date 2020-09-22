@@ -6,10 +6,15 @@ const isDev = require('electron-is-dev');
 const db = require('./db/stores/topicItem');
 
 global.db = db;
+global.electroncategory = {category: ''};
 
 let mainWindow;
 let addCategoryWindow;
 let addTopicWindow;
+let deleteCategoryWindow;
+let deleteTopicWindow;
+let modifyCategoryWindow;
+let modifyTopicWindow;
 let addCategoryMenu = null;
 let topicMenuActive = false;
 let currentCat = '';
@@ -92,6 +97,122 @@ function createAddTopicWindow() {
   addTopicWindow.on("closed", () => (addTopicWindow = null));
 }
 
+function createDeleteCategoryWindow() {
+  deleteCategoryWindow = new BrowserWindow({
+    width: 350,
+    height: 300,
+    minWidth: 350,
+    minHeight: 300,
+    parent: mainWindow, // This to disable mainwindow when addtopic open
+    modal: true,        // This to disable mainwindow when addtopic open
+    title: 'Delete Category',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+      //preload: path.join(__dirname, './preload.js'),
+    }
+  });
+
+  deleteCategoryWindow.loadURL(
+      isDev
+      ? `http://localhost:3000/deletecategory`
+      : `file://${__dirname}/index.html#/deletecategory`
+  );
+
+  if (process.platform !== 'darwin') {
+    deleteCategoryWindow.setMenu(addCategoryMenu);
+  }
+
+  deleteCategoryWindow.on("closed", () => (deleteCategoryWindow = null));
+}
+
+function createModifyCategoryWindow() {
+  modifyCategoryWindow = new BrowserWindow({
+    width: 350,
+    height: 300,
+    minWidth: 350,
+    minHeight: 300,
+    parent: mainWindow, // This to disable mainwindow when addtopic open
+    modal: true,        // This to disable mainwindow when addtopic open
+    title: 'Modify Category',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+      //preload: path.join(__dirname, './preload.js'),
+    }
+  });
+
+  modifyCategoryWindow.loadURL(
+      isDev
+      ? `http://localhost:3000/modifycategory`
+      : `file://${__dirname}/index.html#/modifycategory`
+  );
+
+  if (process.platform !== 'darwin') {
+    modifyCategoryWindow.setMenu(addCategoryMenu);
+  }
+
+  modifyCategoryWindow.on("closed", () => (modifyCategoryWindow = null));
+}
+
+function createModifyTopicWindow() {
+  modifyTopicWindow = new BrowserWindow({
+    width: 350,
+    height: 300,
+    minWidth: 350,
+    minHeight: 300,
+    parent: mainWindow, // This to disable mainwindow when addtopic open
+    modal: true,        // This to disable mainwindow when addtopic open
+    title: 'Modify Topic',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+      //preload: path.join(__dirname, './preload.js'),
+    }
+  });
+
+  modifyTopicWindow.loadURL(
+      isDev
+      ? `http://localhost:3000/modifytopic`
+      : `file://${__dirname}/index.html#/modifytopic`
+  );
+
+  if (process.platform !== 'darwin') {
+    modifyTopicWindow.setMenu(addCategoryMenu);
+  }
+
+  modifyTopicWindow.on("closed", () => (modifyTopicWindow = null));
+}
+
+function createDeleteTopicWindow() {
+  deleteTopicWindow = new BrowserWindow({
+    width: 350,
+    height: 500,
+    minWidth: 350,
+    minHeight: 500,
+    parent: mainWindow, // This to disable mainwindow when addtopic open
+    modal: true,        // This to disable mainwindow when addtopic open
+    title: 'Delete Topic',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+      //preload: path.join(__dirname, './preload.js'),
+    }
+  });
+
+  deleteTopicWindow.loadURL(
+      isDev
+      ? `http://localhost:3000/deletetopic`
+      : `file://${__dirname}/index.html#/deletetopic`
+  );
+
+  if (process.platform !== 'darwin') {
+    deleteTopicWindow.setMenu(addCategoryMenu);
+  }
+
+  deleteTopicWindow.on("closed", () => (deleteTopicWindow = null));
+}
+
 app.on("ready", createWindow);
 
 app.on('window-all-closed', () => {
@@ -117,6 +238,8 @@ ipcMain.on('closeAddTopic', (event, arg) => {
 ipcMain.on('activateTopicMenu', (event, arg) => {
   topicMenuActive = true;
   currentCat = arg;
+  global.electroncategory = {category: arg};
+
 });
 
 ipcMain.on('addCategory', (event, arg) => {
@@ -127,6 +250,41 @@ ipcMain.on('addCategory', (event, arg) => {
     topictext: arg,
     topicgroup:''
   });
+
+  mainWindow.reload();
+});
+
+ipcMain.on('updateCategory', (event, arg) => {
+  modifyCategoryWindow.close();
+
+  db.updateCat(arg);
+  db.updateTopicCat(arg);
+
+  mainWindow.reload();
+});
+
+ipcMain.on('updateTopic', (event, arg) => {
+  modifyTopicWindow.close();
+
+  db.updateTopic(arg);
+
+  mainWindow.reload();
+});
+
+
+ipcMain.on('deleteTopic', (event, arg) => {
+  deleteTopicWindow.close();
+
+  db.deleteTopic(arg);
+
+  mainWindow.reload();
+});
+
+ipcMain.on('deleteCategory', (event, arg) => {
+  deleteCategoryWindow.close();
+
+  db.deleteTopics(arg);
+  db.deleteCategory(arg);
 
   mainWindow.reload();
 });
@@ -144,26 +302,38 @@ ipcMain.on('addTopic', (event, arg) => {
 
 const menuTemplate = [
     {
-        label: 'Menu',
-        submenu: [
-            {
-                label: 'Exit',
-                accelerator: process.platform === 'win32' ? 'Alt+F4' : 'Cmd+Q',
-                click() {
-                    app.quit();
-                }
+      label: 'Menu',
+      submenu: [
+          {
+            label: 'Exit',
+            accelerator: process.platform === 'win32' ? 'Alt+F4' : 'Cmd+Q',
+            click() {
+                app.quit();
             }
-        ]
+          }
+      ]
     },
     {
       label: 'Category',
       submenu: [
-          {
-              label: 'Insert Category',
-              click() {
-                createAddCategoryWindow();
-              }
+        {
+          label: 'Insert Category',
+          click() {
+            createAddCategoryWindow();
           }
+        },
+        {
+          label: 'Delete Category',
+          click() {
+            createDeleteCategoryWindow();
+          }
+        },
+        {
+          label: 'Modify Category Name',
+          click() {
+            createModifyCategoryWindow();
+        }
+      }
       ]
   },
   {
@@ -174,7 +344,19 @@ const menuTemplate = [
             click() {
               if (topicMenuActive) createAddTopicWindow();
             }
+        },
+        {
+          label: 'Delete Topic',
+          click() {
+            if (topicMenuActive) createDeleteTopicWindow();
+          }
+      },
+      {
+        label: 'Modify Topic Name',
+        click() {
+          if (topicMenuActive) createModifyTopicWindow();
         }
+    }
     ]
 }
 ];

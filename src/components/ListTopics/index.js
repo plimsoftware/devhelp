@@ -25,7 +25,7 @@ export default function ListTopics({ category }) {
         <div>
         {topicList.length !== 0 ? (
               topicList.map((topic) => (
-                <button type="button" key={topic._id} onClick={() => handleClick(topic.topictext)}>{topic.topictext}</button>
+                <button type="button" key={topic._id} onClick={() => handleClick(topic)}>{topic.topictext}</button>
               )) ) :
             (
               <div> Without Topics available</div>
