@@ -47,7 +47,7 @@ class TopicItemStore {
         return this.db.find({
             topictype: 'topic',
             topicgroup: category,
-        }).exec();
+        }).sort({ topictext: 1 }).exec();
     }
 
     deleteTopics(category) {

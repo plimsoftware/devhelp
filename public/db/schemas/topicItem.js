@@ -10,6 +10,9 @@ const topicItemSchema = {
       topicgroup: {
         type: 'string',
       },
+      topicparent: {
+        type: 'string',
+      },
       order: {
         type: 'integer',
       },

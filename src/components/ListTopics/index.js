@@ -1,11 +1,12 @@
 import React, { useEffect, useState} from 'react';
+import { setSyntheticLeadingComments } from 'typescript';
 
 import { MainContainer } from './styled';
 
 const { remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
 
-export default function ListTopics({ category }) {
+export default function ListTopics({ category, setPage, setTitle }) {
   const [topicList, setTopicList] = useState([]);
 
   useEffect(() => {
@@ -17,7 +18,10 @@ export default function ListTopics({ category }) {
 
   }, [category]);
 
-  const handleClick = () => {};
+  const handleClick = (topic) => {
+    setPage('DetailTopic');
+    setTitle(topic.topictext);
+  };
 
     return (
       <MainContainer>
