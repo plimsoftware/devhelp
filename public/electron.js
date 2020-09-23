@@ -297,7 +297,7 @@ ipcMain.on('deleteCategory', (event, arg) => {
 });
 
 ipcMain.on('deleteComment', (event, arg) => {
-  console.log(arg);
+
   db.deleteTopic(arg);
 
   mainWindow.reload();
@@ -316,7 +316,7 @@ ipcMain.on('addTopic', (event, arg) => {
 
 ipcMain.on('addTopicComment', (event, arg) => {
   db.create({
-    topictype: 'comment',
+    topictype: arg.topictype,
     topictext: arg.text,
     topicparent: arg.topicparent,
     order: arg.order,

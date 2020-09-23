@@ -12,6 +12,10 @@ section {
   margin-top: 10px;
 }
 
+pre {
+  width: 98%;
+}
+
 p {
   font-size: 15px;
   width: 98%;
