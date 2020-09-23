@@ -29,7 +29,7 @@ const handleClick = (category) => {
                 <h3><strong>Warning:</strong> All topics will be deleted</h3>
                 {categories.length !== 0 ? (
                     categories.map((topic) => (
-                        <button type="button" key={topic._id} onClick={() => handleClick(topic.topictext)}>{topic.topictext}</button>
+                        <button type="button" key={topic._id} onClick={() => handleClick(topic)}>{topic.topictext}</button>
                 )) ) :
                 (
                     <div></div>

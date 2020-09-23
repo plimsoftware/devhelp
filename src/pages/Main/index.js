@@ -11,6 +11,8 @@ export default function Main() {
     const [currentPage, setCurrentPage] = useState('Home');
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
+    const [id, setID] = useState('');
+    const [topicGroup, setTopicGroup] = useState('');
 
     return (
         <Container>
@@ -26,9 +28,17 @@ export default function Main() {
                     category={category}
                     setPage={(page) => setCurrentPage(page)}
                     setTitle={(title) => setTitle(title)}
+                    setID={(id) => setID(id)}
+                    setTopicGroup={(topicGroup) => setTopicGroup(topicGroup)}
                     />
                      : <></>}
-                {currentPage === 'DetailTopic'? <DetailTopic category={category} title={title} setPage={(page) => setCurrentPage(page)}/> : <></>}
+                {currentPage === 'DetailTopic'? <DetailTopic
+                    category={category}
+                    title={title}
+                    id={id}
+                    topicgroup = {topicGroup}
+                    setPage={(page) => setCurrentPage(page)}
+                    /> : <></>}
             </div>
         </Container>
 

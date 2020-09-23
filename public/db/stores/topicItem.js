@@ -50,24 +50,30 @@ class TopicItemStore {
         }).sort({ topictext: 1 }).exec();
     }
 
-    deleteTopics(category) {
-        return this.db.remove({
-            topicgroup: category,
-        },
-        { multi: true});
+    readTopicDetail(id) {
+        return this.db.find({
+            topicparent: id,
+        }).sort({ order: 1 }).exec();
+    }
+
+    readTopicMax(id) {
+        return this.db.find({
+            topicparent: id,
+        }).sort({ order: -1 }).limit(1).exec();
     }
 
     deleteTopic(_id) {
         return this.db.remove({
-            _id,
+            _id
         });
     }
 
     deleteCategory(category) {
         return this.db.remove({
-            topictype:'bt',
-            topictext:category,
-        });
+            topicgroup:category.topicgroup,
+        },
+        { multi: true});
+        
     }
 
     updateCat(topic) {
@@ -75,6 +81,10 @@ class TopicItemStore {
     }
 
     updateTopic(topic) {
+        return this.db.update({_id: topic._id}, {$set: {topictext: topic.topictext}});
+    }
+
+    updateComment(topic) {
         return this.db.update({_id: topic._id}, {$set: {topictext: topic.topictext}});
     }
 

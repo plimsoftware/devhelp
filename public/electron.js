@@ -8,6 +8,8 @@ const db = require('./db/stores/topicItem');
 global.db = db;
 global.electroncategory = {category: ''};
 
+//process.env.NODE_ENV = 'production';
+
 let mainWindow;
 let addCategoryWindow;
 let addTopicWindow;
@@ -248,7 +250,7 @@ ipcMain.on('addCategory', (event, arg) => {
   db.create({
     topictype: 'bt',
     topictext: arg,
-    topicgroup:''
+    topicgroup: arg
   });
 
   mainWindow.reload();
@@ -271,6 +273,12 @@ ipcMain.on('updateTopic', (event, arg) => {
   mainWindow.reload();
 });
 
+ipcMain.on('updateComment', (event, arg) => {
+
+  db.updateComment(arg);
+
+  mainWindow.reload();
+});
 
 ipcMain.on('deleteTopic', (event, arg) => {
   deleteTopicWindow.close();
@@ -283,8 +291,14 @@ ipcMain.on('deleteTopic', (event, arg) => {
 ipcMain.on('deleteCategory', (event, arg) => {
   deleteCategoryWindow.close();
 
-  db.deleteTopics(arg);
   db.deleteCategory(arg);
+
+  mainWindow.reload();
+});
+
+ipcMain.on('deleteComment', (event, arg) => {
+  console.log(arg);
+  db.deleteTopic(arg);
 
   mainWindow.reload();
 });
@@ -297,6 +311,18 @@ ipcMain.on('addTopic', (event, arg) => {
   });
 
   addTopicWindow.close();
+  mainWindow.reload();
+});
+
+ipcMain.on('addTopicComment', (event, arg) => {
+  db.create({
+    topictype: 'comment',
+    topictext: arg.text,
+    topicparent: arg.topicparent,
+    order: arg.order,
+    topicgroup: arg.topicgroup
+  });
+
   mainWindow.reload();
 });
 
@@ -345,6 +371,12 @@ const menuTemplate = [
               if (topicMenuActive) createAddTopicWindow();
             }
         },
+        {
+          label: 'Edit Topic',
+          click() {
+            if (topicMenuActive) mainWindow.webContents.send('editComment', '');
+          }
+      },
         {
           label: 'Delete Topic',
           click() {
