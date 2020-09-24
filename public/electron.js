@@ -8,7 +8,11 @@ const db = require('./db/stores/topicItem');
 global.db = db;
 global.electroncategory = {category: ''};
 
-//process.env.NODE_ENV = 'production';
+if (isDev) {
+  process.env.NODE_ENV = 'development';
+} else {
+  process.env.NODE_ENV = 'production';
+}
 
 let mainWindow;
 let addCategoryWindow;
@@ -330,6 +334,20 @@ const menuTemplate = [
     {
       label: 'Menu',
       submenu: [
+        {
+          label: 'Check Server Status',
+          enabled: false,
+          click() {
+              
+          }
+        },
+        {
+          label: 'Sync with Server',
+          enabled: false,
+          click() {
+              
+          }
+        },
           {
             label: 'Exit',
             accelerator: process.platform === 'win32' ? 'Alt+F4' : 'Cmd+Q',
