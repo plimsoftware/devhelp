@@ -3,7 +3,7 @@ import React from 'react';
 import { MainContainer } from './styled';
 
 export default function Welcome() {
-  
+ 
     return (
       <MainContainer>
         <h1>Welcome to Developer Help</h1>

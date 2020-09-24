@@ -41,6 +41,8 @@ function createWindow() {
     mainWindow = null;
   });
 
+  console.log(path.dirname (process.execPath));
+  
   const mainMenu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(mainMenu);
 }

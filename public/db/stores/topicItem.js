@@ -3,6 +3,7 @@ const Ajv = require('ajv');
 const topicItemSchema = require('../schemas/topicItem');
 const electron = require('electron');
 const { app } = electron;
+const path = require('path');
 
 class TopicItemStore {
     constructor() {
@@ -13,7 +14,8 @@ class TopicItemStore {
 
         this.schemaValidator = ajv.compile(topicItemSchema);
 
-        const dbPath = `${app.getPath('userData')}/devhelp.db`;
+        // const dbPath = `${app.getPath('userData')}/devhelp.db`;   ORIGINAL
+        const dbPath = `${path.dirname (process.execPath)}/devhelp.db`;  // Portabil App
         this.db = Datastore.create({
             filename: dbPath,
             timestampData: true,

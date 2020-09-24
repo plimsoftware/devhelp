@@ -86,7 +86,8 @@ export default function DetailTopic({ title, id, topicgroup }) {
   
     return (
       <MainContainer>
-        <h1>{title}</h1>
+        <h1>{topicgroup}</h1>
+        <h2>{title}</h2>
         <section id="detailtopic">
           {detail.length !== 0 ? (
               detail.map((topic) => (
