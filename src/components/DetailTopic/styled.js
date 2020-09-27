@@ -21,7 +21,7 @@ p {
   width: 98%;
   margin-bottom: 10px;
   white-space: pre-wrap;
-  border-bottom: 1px solid #910101;
+  border-top: 1px solid #910101;
 }
 
 div {
