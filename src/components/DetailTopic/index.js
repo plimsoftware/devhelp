@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaEdit, FaTimesCircle } from 'react-icons/fa';
+import { FaEdit, FaTimesCircle, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import Prism from "prismjs";
 import "./prism.css";
 
@@ -14,7 +14,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
   const [editBT, setEditBT] = useState(false);
   const [currentElement, setCurrentElement] = useState('');
   const [detail, setDetail] = useState([]);
-  const [order, setOrder] = useState(1);
+  const [order, setOrder] = useState(0);
   const [currentID, setCurrentID] = useState('');
   const [myType, setMyType] = useState('');
 
@@ -26,10 +26,13 @@ export default function DetailTopic({ title, id, topicgroup }) {
         setDetail(allTopics);
     });
 
-    if (detail.length > 0 ) dbInstance.readTopicMax(id)
+    
+      if (detail.length > 0 ) dbInstance.readTopicMax(id)
       .then(topicMax => {
-        setOrder(Number(topicMax[0].order) + 1);
-    });
+        setOrder(Number(topicMax[0].order));
+      });
+
+    
 
     ipcRenderer.on('editComment', (event, arg) => {
       setEditBT(true);
@@ -48,6 +51,12 @@ export default function DetailTopic({ title, id, topicgroup }) {
     
   };
 
+  const handleDeleteAsk = (e) => {
+    const exclamation = e.currentTarget.nextSibling;
+    exclamation.setAttribute('display', 'inline');
+    e.currentTarget.remove();
+  };
+
   const handleDeleteComment = (comment) => {
     ipcRenderer.send('deleteComment', comment._id);
   }
@@ -62,12 +71,53 @@ export default function DetailTopic({ title, id, topicgroup }) {
     setCurrentID(comment._id);
   }
 
+  const handleEditUp = (comment) => {
+
+    dbInstance.upComment(comment)
+      .then(topic => {
+        let lastComment;
+
+        if (topic !== null) {
+          lastComment = topic._id;
+        } else {
+          lastComment = null;
+        }
+        
+        if (lastComment !== null) ipcRenderer.send('upTopicComment', {
+          lastComment: lastComment,
+          actualComment: comment._id,
+          order: comment.order
+        });
+    });
+
+  }
+
+  const handleEditDown = (comment) => {
+    dbInstance.downComment(comment)
+      .then(topic => {
+        let nextComment;
+
+        if (topic !== null) {
+          nextComment = topic._id;
+        } else {
+          nextComment = null;
+        }
+        
+        if (nextComment !== null) ipcRenderer.send('downTopicComment', {
+          nextComment: nextComment,
+          actualComment: comment._id,
+          order: comment.order
+        });
+    });
+  }
+
   const handleSave = ()=> {
+
     if (!editcomment){
       ipcRenderer.send('addTopicComment', {
         text: currentElement.value,
         topicparent: id,
-        order: order,
+        order: order + 1,
         topicgroup: topicgroup,
         topictype: myType
       });
@@ -91,27 +141,34 @@ export default function DetailTopic({ title, id, topicgroup }) {
         <section id="detailtopic">
           {detail.length !== 0 ? (
               detail.map((topic) => (
-                <span>
+                <span key={topic._id}>
                   { topic.topictype === 'comment' &&
-                  <p key={topic._id}>{topic.topictext}  {editBT && 
+                  <p>{topic.topictext}  
+                  {editBT && 
                     <>
+                      <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />
+                      <FaArrowDown size="10" color="yellow" title="Move Down" cursor="pointer" onClick={() => handleEditDown(topic)} />
                       <FaEdit size="10" color="yellow" title="Modify" cursor="pointer" onClick={() => handleEditComment(topic)} />
-                      <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
+                      <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={handleDeleteAsk}/>
+                      <FaTimesCircle size="10" color="red" title="Confirm Delete" display="none" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
                     </>}
                     </p>
                   } 
                   { topic.topictype === 'code' &&
-                    <><pre key={topic._id}>
-                      <code class="language-javascript">
+                    <div><pre>
+                      <code className="language-javascript">
                         {topic.topictext}
                       </code>
                     </pre>
                     {editBT && 
                       <>
+                        <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />
+                        <FaArrowDown size="10" color="yellow" title="Move Down" cursor="pointer" onClick={() => handleEditDown(topic)} />
                         <FaEdit size="10" color="yellow" title="Modify" cursor="pointer" onClick={() => handleEditComment(topic)} />
-                        <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
+                        <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={handleDeleteAsk}/>
+                        <FaTimesCircle size="10" color="red" title="Confirm Delete" display="none" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
                       </>}
-                      </>
+                      </div>
                   } 
                 </span>
               )) ) :

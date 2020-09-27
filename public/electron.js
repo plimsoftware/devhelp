@@ -41,8 +41,6 @@ function createWindow() {
     mainWindow = null;
   });
 
-  console.log(path.dirname (process.execPath));
-  
   const mainMenu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(mainMenu);
 }
@@ -285,6 +283,22 @@ ipcMain.on('updateComment', (event, arg) => {
 
   mainWindow.reload();
 });
+
+ipcMain.on('upTopicComment', (event, arg) => {
+
+  db.upSaveComment(arg);
+
+  mainWindow.reload();
+});
+
+ipcMain.on('downTopicComment', (event, arg) => {
+
+  db.downSaveComment(arg);
+
+  mainWindow.reload();
+});
+
+
 
 ipcMain.on('deleteTopic', (event, arg) => {
   deleteTopicWindow.close();

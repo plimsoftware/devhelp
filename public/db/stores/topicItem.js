@@ -14,7 +14,7 @@ class TopicItemStore {
 
         this.schemaValidator = ajv.compile(topicItemSchema);
 
-        // const dbPath = `${app.getPath('userData')}/devhelp.db`;   ORIGINAL
+        //const dbPath = `${app.getPath('userData')}/devhelp.db`;   //ORIGINAL
         const dbPath = `${path.dirname (process.execPath)}/devhelp.db`;  // Portabil App
         this.db = Datastore.create({
             filename: dbPath,
@@ -42,7 +42,7 @@ class TopicItemStore {
     }
 
     readBT() {
-        return this.db.find({topictype: 'bt'}).exec();
+        return this.db.find({topictype: 'bt'}).sort({ topictext: 1 }).exec();
     }
 
     readTopic(category) {
@@ -78,6 +78,18 @@ class TopicItemStore {
         
     }
 
+    upSaveComment(topic) {
+        this.db.update({_id: topic.lastComment}, {$set: {order: topic.order}});
+        this.db.update({_id: topic.actualComment}, {$set: {order: topic.order - 1}});
+        return;
+    }
+
+    downSaveComment(topic) {
+        this.db.update({_id: topic.nextComment}, {$set: {order: topic.order}});
+        this.db.update({_id: topic.actualComment}, {$set: {order: topic.order + 1}});
+        return;
+    }
+
     updateCat(topic) {
         return this.db.update({_id: topic._id}, {$set: {topictext: topic.topictext}});
     }
@@ -88,6 +100,22 @@ class TopicItemStore {
 
     updateComment(topic) {
         return this.db.update({_id: topic._id}, {$set: {topictext: topic.topictext}});
+    }
+
+    upComment(topic) {
+
+        return this.db.findOne({
+            topicparent: topic.topicparent,
+            order: topic.order -1
+        });
+    }
+
+    downComment(topic) {
+
+        return this.db.findOne({
+            topicparent: topic.topicparent,
+            order: topic.order + 1
+        });
     }
 
     updateTopicCat(topic) {
