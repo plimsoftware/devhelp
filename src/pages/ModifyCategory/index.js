@@ -21,6 +21,7 @@ useEffect(() => {
 
 
 const handleClick = (topic) => {
+    setCategoryName(topic.topictext);
     setCatSelected(topic);
 };
 
@@ -46,7 +47,7 @@ const handleSubmit = () => {
                 <div>
                     <h2>Insert new name</h2>
                     <form onSubmit={handleSubmit}>
-                        <input autoFocus type="text" onChange={(e) => setCategoryName(e.currentTarget.value)}></input>
+                        <input autoFocus type="text" value={categoryName} onChange={(e) => setCategoryName(e.currentTarget.value)}></input>
                         <button type="submit">Submit</button>
                     </form>
                 </div>

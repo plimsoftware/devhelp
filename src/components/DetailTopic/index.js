@@ -173,7 +173,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
                 </span>
               )) ) :
             (
-              <div></div>
+              <div>Without comments available</div>
             )
           }
         </section>

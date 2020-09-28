@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.section`
+  
     .split {
       position: fixed;
       overflow-x: hidden;

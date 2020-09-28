@@ -5,7 +5,7 @@ const { ipcRenderer, remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
 const myCategoy = remote.getGlobal('electroncategory').category;
 
-export default function Main(props) {// Fiquei aqui
+export default function Main() {
 const [topics, setTopics] = useState([]);
 
 

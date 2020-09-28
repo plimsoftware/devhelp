@@ -6,6 +6,7 @@ flex-direction: column;
 justify-components: center;
 margin-top: 20px;
 margin-left: 20px;
+margin-bottom: 100px;
 color: white;
 
 section {
@@ -19,6 +20,7 @@ pre {
 p {
   font-size: 15px;
   width: 98%;
+  margin-top: 5px;
   margin-bottom: 10px;
   white-space: pre-wrap;
   border-top: 1px solid #910101;
