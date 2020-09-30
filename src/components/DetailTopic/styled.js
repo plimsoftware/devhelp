@@ -33,7 +33,7 @@ div {
 textarea{  
   overflow:hidden;
   padding:10px;
-  width:98%;
+  width:99%;
   height: 150px;
   font-size:14px;
   display:block;
@@ -42,14 +42,14 @@ textarea{
 
 button {
     margin-top: 5px;
-    width: 99%;
+    width: 98%;
     border-radius: 10px;
     background-color: #3E2776;
     color: white;
   }
 
   .midButton {
-    width: 33% !important;
+    width: 24.5% !important;
   }
 
 `;
