@@ -42,10 +42,14 @@ textarea{
 
 button {
     margin-top: 5px;
-    width: 98%;
+    width: 99%;
     border-radius: 10px;
     background-color: #3E2776;
     color: white;
+  }
+
+  .midButton {
+    width: 33% !important;
   }
 
 `;

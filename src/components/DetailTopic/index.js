@@ -154,9 +154,57 @@ export default function DetailTopic({ title, id, topicgroup }) {
                     </>}
                     </p>
                   } 
-                  { topic.topictype === 'code' &&
+                  { (topic.topictype === 'code' || topic.topictype === 'code js') &&
                     <div><pre>
                       <code className="language-javascript">
+                        {topic.topictext}
+                      </code>
+                    </pre>
+                    {editBT && 
+                      <>
+                        <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />
+                        <FaArrowDown size="10" color="yellow" title="Move Down" cursor="pointer" onClick={() => handleEditDown(topic)} />
+                        <FaEdit size="10" color="yellow" title="Modify" cursor="pointer" onClick={() => handleEditComment(topic)} />
+                        <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={handleDeleteAsk}/>
+                        <FaTimesCircle size="10" color="red" title="Confirm Delete" display="none" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
+                      </>}
+                      </div>
+                  } 
+                  { topic.topictype === 'code css' &&
+                    <div><pre>
+                      <code className="language-css">
+                        {topic.topictext}
+                      </code>
+                    </pre>
+                    {editBT && 
+                      <>
+                        <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />
+                        <FaArrowDown size="10" color="yellow" title="Move Down" cursor="pointer" onClick={() => handleEditDown(topic)} />
+                        <FaEdit size="10" color="yellow" title="Modify" cursor="pointer" onClick={() => handleEditComment(topic)} />
+                        <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={handleDeleteAsk}/>
+                        <FaTimesCircle size="10" color="red" title="Confirm Delete" display="none" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
+                      </>}
+                      </div>
+                  } 
+                  { topic.topictype === 'code html' &&
+                    <div><pre>
+                      <code className="language-html">
+                        {topic.topictext}
+                      </code>
+                    </pre>
+                    {editBT && 
+                      <>
+                        <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />
+                        <FaArrowDown size="10" color="yellow" title="Move Down" cursor="pointer" onClick={() => handleEditDown(topic)} />
+                        <FaEdit size="10" color="yellow" title="Modify" cursor="pointer" onClick={() => handleEditComment(topic)} />
+                        <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={handleDeleteAsk}/>
+                        <FaTimesCircle size="10" color="red" title="Confirm Delete" display="none" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
+                      </>}
+                      </div>
+                  } 
+                  { topic.topictype === 'code json' &&
+                    <div><pre>
+                      <code className="language-json">
                         {topic.topictext}
                       </code>
                     </pre>
@@ -186,7 +234,10 @@ export default function DetailTopic({ title, id, topicgroup }) {
         ):(
           <>
             <span><button type="button" onClick={() => handleInsert('comment')}>Insert Comment</button></span>
-            <span><button type="button" onClick={() => handleInsert('code')}>Insert Code</button></span>
+            <span><button type="button" className="midButton" onClick={() => handleInsert('code js')}>Insert Code JavaScript</button></span>
+            <span><button type="button" className="midButton" onClick={() => handleInsert('code css')}>Insert Code CSS</button></span>
+            <span><button type="button" className="midButton" onClick={() => handleInsert('code html')}>Insert Code HTML</button></span>
+            <span><button type="button" className="midButton" onClick={() => handleInsert('code json')}>Insert Code JSON</button></span>
           </>
         )}
         
