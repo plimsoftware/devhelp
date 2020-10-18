@@ -4,7 +4,11 @@ With so many technologies available (Node, React, Javascript, ...), I created a 
 
 For example, I create the "React" category. Then I create the topic "Install" and then I have it available to create the body of the topic, comment boxes and boxes with code format.<br />
 
-# Version 1.3.1
+# Version 1.4.0
+
+Added help to write comments with markdown.
+
+### Version 1.3.1
 
 Now comments accept markdown tags.
 

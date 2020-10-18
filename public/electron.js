@@ -20,6 +20,7 @@ let addTopicWindow;
 let deleteCategoryWindow;
 let deleteTopicWindow;
 let modifyCategoryWindow;
+let markdownHelpWindow;
 let modifyTopicWindow;
 let addCategoryMenu = null;
 let topicMenuActive = false;
@@ -217,6 +218,32 @@ function createDeleteTopicWindow() {
   }
 
   deleteTopicWindow.on("closed", () => (deleteTopicWindow = null));
+}
+
+function createMarkdownHelpWindow() {
+  markdownHelpWindow = new BrowserWindow({
+    width: 350,
+    height: 500,
+    minWidth: 350,
+    minHeight: 500,
+    title: 'Markdown Help',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+    }
+  });
+
+  markdownHelpWindow.loadURL(
+      isDev
+      ? `http://localhost:3000/markdownhelp`
+      : `file://${__dirname}/index.html#/markdownhelp`
+  );
+
+  if (process.platform !== 'darwin') {
+    markdownHelpWindow.setMenu(addCategoryMenu);
+  }
+
+  markdownHelpWindow.on("closed", () => (markdownHelpWindow = null));
 }
 
 app.on("ready", createWindow);
@@ -424,6 +451,17 @@ const menuTemplate = [
         }
     }
     ]
+},
+{
+  label: 'Help',
+  submenu: [
+      {
+          label: 'Markdown tags',
+          click() {
+            createMarkdownHelpWindow();
+          }
+      },
+  ]
 }
 ];
 
