@@ -11,6 +11,10 @@ color: white;
 
 section {
   margin-top: 10px;
+
+  h1 {
+    font-size: 20px;
+  }
 }
 
 pre {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MarkdownPreview from '@uiw/react-markdown-preview';
+import Markdown from 'react-markdown';
 import { FaEdit, FaTimesCircle, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import Prism from "prismjs";
 import "./prism.css";
@@ -144,7 +144,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
               detail.map((topic) => (
                 <span key={topic._id}>
                   { topic.topictype === 'comment' &&
-                  <p><MarkdownPreview source={topic.topictext} />  
+                  <section><Markdown source={topic.topictext} />  
                   {editBT && 
                     <>
                       <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />
@@ -153,7 +153,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
                       <FaTimesCircle size="10" color="yellow" title="Delete" cursor="pointer" onClick={handleDeleteAsk}/>
                       <FaTimesCircle size="10" color="red" title="Confirm Delete" display="none" cursor="pointer" onClick={() => handleDeleteComment(topic)}/>
                     </>}
-                    </p>
+                    </section>
                   } 
                   { (topic.topictype === 'code' || topic.topictype === 'code js') &&
                     <div><pre>
