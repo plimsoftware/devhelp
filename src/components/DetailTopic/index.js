@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MarkdownPreview from '@uiw/react-markdown-preview';
 import { FaEdit, FaTimesCircle, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import Prism from "prismjs";
 import "./prism.css";
@@ -143,7 +144,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
               detail.map((topic) => (
                 <span key={topic._id}>
                   { topic.topictype === 'comment' &&
-                  <p>{topic.topictext}  
+                  <p><MarkdownPreview source={topic.topictext} />  
                   {editBT && 
                     <>
                       <FaArrowUp size="10" color="yellow" title="Move Up" cursor="pointer" onClick={() => handleEditUp(topic)} />

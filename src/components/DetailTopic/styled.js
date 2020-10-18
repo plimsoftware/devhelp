@@ -21,6 +21,7 @@ p {
   font-size: 15px;
   width: 98%;
   margin-top: 5px;
+  padding-top: 10px;
   margin-bottom: 10px;
   white-space: pre-wrap;
   border-top: 1px solid #910101;

@@ -6,6 +6,7 @@ flex-direction: column;
 justify-components: center;
 margin-top: 20px;
 margin-left: 20px;
+margin-bottom: 100px;
 color: white;
 
 div {
