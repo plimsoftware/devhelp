@@ -380,7 +380,8 @@ const menuTemplate = [
         {
           label: 'Home',
           click() {
-            mainWindow.reload();              
+            app.relaunch();
+            app.quit();             
           }
         },
         {
