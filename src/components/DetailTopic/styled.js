@@ -15,6 +15,15 @@ section {
   h1 {
     font-size: 20px;
   }
+
+  h {
+    margin-top: 10px;
+    margin-buttom: 10px;
+  }
+
+  img {
+    max-width: 700px;
+  }
 }
 
 pre {
@@ -28,7 +37,6 @@ p {
   padding-top: 10px;
   margin-bottom: 10px;
   white-space: pre-wrap;
-  border-top: 1px solid #910101;
 }
 
 div {

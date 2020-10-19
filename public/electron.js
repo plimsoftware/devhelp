@@ -378,6 +378,12 @@ const menuTemplate = [
       label: 'Menu',
       submenu: [
         {
+          label: 'Home',
+          click() {
+            mainWindow.reload();              
+          }
+        },
+        {
           label: 'Check Server Status',
           enabled: false,
           click() {
