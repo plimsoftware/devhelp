@@ -19,6 +19,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
   const [currentID, setCurrentID] = useState('');
   const [myType, setMyType] = useState('');
 
+ 
   useEffect(() => {
     Prism.highlightAll();
 
@@ -28,16 +29,16 @@ export default function DetailTopic({ title, id, topicgroup }) {
     });
 
     
-      if (detail.length > 0 ) dbInstance.readTopicMax(id)
+    if (detail.length > 0 ) dbInstance.readTopicMax(id)
       .then(topicMax => {
         setOrder(Number(topicMax[0].order));
-      });
-
-    
+     });
 
     ipcRenderer.on('editComment', (event, arg) => {
       setEditBT(true);
     });
+
+    
 
   }, [id, detail.length]);
 
@@ -132,6 +133,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
 
   const handleCancel = ()=> {
     setEditing(false);
+    setCurrentID(0);
     currentElement.remove();
   };
   

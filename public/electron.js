@@ -380,8 +380,7 @@ const menuTemplate = [
         {
           label: 'Home',
           click() {
-            app.relaunch();
-            app.quit();             
+            mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`);            
           }
         },
         {
