@@ -1,22 +1,21 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  background-color: #3f63b5;
+  align-items: center;
+  justify-content: center;
+`;
 
-    button {
-      width: 150px;
-      top: 10px;
-      height: 40px;
-      border-radius: 10px;
-      background-color: #3E2776;
-      color: #F5F5F5;
-      margin-bottom: 3px;
-    }
-
-    img {
-      padding-top: 2px;
-      width: 30px;
-      height: 30px;
-    }
+export const Button = styled.button`
+  width: 180px;
+  top: 10px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #3E2776;
+  color: #F5F5F5;
+  margin-bottom: 3px;
 `;
 

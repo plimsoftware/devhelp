@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-    background: black;
+    background: #3f63b5;
     box-shadow: 0 0 10px rgba(0, 0, 0, 1);
     position: fixed;
     padding-top: 5px;
-    padding-bottom: 5px:
+    padding-bottom: 5px;
     top: 0;
     width: 100%;
     height: 50px;
@@ -14,7 +14,6 @@ export const Nav = styled.nav`
 export const NavHeader = styled.div`
     display: flex;
     width: 100%;
-    align-itens: center;
 `;
 
 export const NavLeft = styled.div`

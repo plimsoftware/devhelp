@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import EllipsisText from "react-ellipsis-text";
 
-import { Container } from './styled';
+import { Container, Button, SubContainer } from './styled';
 
 
 const { ipcRenderer, remote } = window.require('electron');
@@ -28,16 +29,14 @@ export default function Menu({ setPage, setCategory }) {
 
    return (
         <Container>
-          <div id="mytopics">
             {myCategory.length !== 0 ? (
               myCategory.map((topic) => (
-                <button type="button" key={topic._id} onClick={() => handleClick(topic.topictext)}>{topic.topictext}</button>
+                <Button type="button" key={topic._id} onClick={() => handleClick(topic.topictext)}><EllipsisText text={topic.topictext} length={"25"} /></Button>
               )) ) :
             (
               <div></div>
             )
           }
-          </div>
         </Container>
     );
 }

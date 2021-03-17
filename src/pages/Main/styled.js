@@ -10,16 +10,18 @@ export const Container = styled.section`
     }
 
     .left {
-      left: 0;
+      display: flex;
+      flex-direction: column;
       height: 90%;
-      width: 180px;
-      background-color: black;
+      width: 200px;
+      background-color: #3f63b5;
+      align-items: center;
     }
 
     .right {
-      left: 183px;
+      left: 203px;
       right: 0;
-      background-color: #330000;
+      background-color: #d0f5f7;
     }
 
     .centered {

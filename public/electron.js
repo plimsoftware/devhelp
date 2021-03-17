@@ -28,11 +28,12 @@ let currentCat = '';
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-      width: 900,
+      width: 1200,
       height: 680,
       title: 'Developer Help',
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        enableRemoteModule:true,
     }
     });
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`);
@@ -49,9 +50,8 @@ function createWindow() {
 function createAddCategoryWindow() {
     addCategoryWindow = new BrowserWindow({
       width: 340,
-      height: 160,
-      minWidth: 340,
-      minHeight: 160,
+      height: 140,
+      resizable: false,
       parent: mainWindow, // This to disable mainwindow when addtopic open
       modal: true,        // This to disable mainwindow when addtopic open
       title: 'Add Category',

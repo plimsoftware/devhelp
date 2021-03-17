@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
-justify-components: center;
+justify-content: center;
 margin-top: 20px;
 margin-left: 20px;
 margin-bottom: 100px;
-color: white;
+color: black;
 
 div {
     margin-top: 10px;
@@ -19,8 +19,8 @@ button {
     height: 30px;
     padding-left: 10px;
     border-radius: 10px;
-    background-color: #3E2776;
-    color: white;
+    background-color: #9cf7f7;
+    color: black;
     text-align: left;
   }
 
