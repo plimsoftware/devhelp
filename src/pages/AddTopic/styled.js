@@ -9,6 +9,11 @@ export const Container = styled.section`
 
   label {
     margin-right: 5px;
+    width: 160px;
+  }
+
+  input {
+    margin-left: 5px;
   }
 
   button {

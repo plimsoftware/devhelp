@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
-import { Container} from './styled';
+import { Container } from './styled';
 
 const { ipcRenderer } = window.require('electron');
 
-
 export default function Main() {
-const [topicText, setTopicText] = useState('');
+  const [topicText, setTopicText] = useState('');
 
-const handleExit = () => {
+  const handleExit = () => {
     ipcRenderer.send('closeAddTopic', '');
-}
+  };
 
-const handleSubmit = () => {
+  const handleSubmit = () => {
     if (topicText === '') return;
-    ipcRenderer.send('addTopic', {text: topicText});
-}
-    return (
-        <Container>
-            <form onSubmit={handleSubmit}>
-                <label>Insert New Topic</label>
-                <input autoFocus type="text" onChange={(e) => setTopicText(e.currentTarget.value)}></input>
-                <button type="submit">Submit</button>
-                <button type="button" onClick={handleExit}>Cancel</button>
-            </form>
-        </Container>
-
-    );
+    ipcRenderer.send('addTopic', { text: topicText });
+  };
+  return (
+    <Container>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="topictext">
+          Insert New Topic
+          <input
+            autoFocus
+            type="text"
+            id="topictext"
+            onChange={(e) => setTopicText(e.currentTarget.value)}
+          />
+        </label>
+        <button type="submit">Submit</button>
+        <button type="button" onClick={handleExit}>
+          Cancel
+        </button>
+      </form>
+    </Container>
+  );
 }

@@ -6,7 +6,7 @@ const isDev = require('electron-is-dev');
 const db = require('./db/stores/topicItem');
 
 global.db = db;
-global.electroncategory = {category: ''};
+global.electroncategory = { category: '' };
 
 if (isDev) {
   process.env.NODE_ENV = 'development';
@@ -26,53 +26,32 @@ let addCategoryMenu = null;
 let topicMenuActive = false;
 let currentCat = '';
 
-function createWindow() {
-  mainWindow = new BrowserWindow({
-      width: 1200,
-      height: 680,
-      title: 'Developer Help',
-      webPreferences: {
-        nodeIntegration: true,
-        enableRemoteModule:true,
-    }
-    });
-  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`);
-  
-  mainWindow.on('close', () => {
-    app.quit();
-    mainWindow = null;
+function createAddCategoryWindow() {
+  addCategoryWindow = new BrowserWindow({
+    width: 340,
+    height: 140,
+    resizable: false,
+    parent: mainWindow, // This to disable mainwindow when addtopic open
+    modal: true, // This to disable mainwindow when addtopic open
+    title: 'Add Category',
+    icon: path.join(__dirname, './favicon.ico'),
+    webPreferences: {
+      nodeIntegration: true,
+      // preload: path.join(__dirname, './preload.js'),
+    },
   });
 
-  const mainMenu = Menu.buildFromTemplate(menuTemplate);
-  Menu.setApplicationMenu(mainMenu);
-}
+  addCategoryWindow.loadURL(
+    isDev
+      ? `http://localhost:3000/addcategory`
+      : `file://${__dirname}/index.html#/addcategory`
+  );
 
-function createAddCategoryWindow() {
-    addCategoryWindow = new BrowserWindow({
-      width: 340,
-      height: 140,
-      resizable: false,
-      parent: mainWindow, // This to disable mainwindow when addtopic open
-      modal: true,        // This to disable mainwindow when addtopic open
-      title: 'Add Category',
-      icon: path.join(__dirname, './favicon.ico'),
-      webPreferences: {
-        nodeIntegration: true,
-        //preload: path.join(__dirname, './preload.js'),
-      }
-    });
-  
-    addCategoryWindow.loadURL(
-        isDev
-        ? `http://localhost:3000/addcategory`
-        : `file://${__dirname}/index.html#/addcategory`
-    );
-  
-    if (process.platform !== 'darwin') {
-        addCategoryWindow.setMenu(addCategoryMenu);
-    }
-  
-    addCategoryWindow.on("closed", () => (addCategoryWindow = null));
+  if (process.platform !== 'darwin') {
+    addCategoryWindow.setMenu(addCategoryMenu);
+  }
+
+  addCategoryWindow.on('closed', () => (addCategoryWindow = null));
 }
 
 function createAddTopicWindow() {
@@ -82,17 +61,17 @@ function createAddTopicWindow() {
     minWidth: 340,
     minHeight: 160,
     parent: mainWindow, // This to disable mainwindow when addtopic open
-    modal: true,        // This to disable mainwindow when addtopic open
+    modal: true, // This to disable mainwindow when addtopic open
     title: 'Add Topic',
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
-      //preload: path.join(__dirname, './preload.js'),
-    }
+      // preload: path.join(__dirname, './preload.js'),
+    },
   });
 
   addTopicWindow.loadURL(
-      isDev
+    isDev
       ? `http://localhost:3000/addtopic`
       : `file://${__dirname}/index.html#/addtopic`
   );
@@ -101,7 +80,7 @@ function createAddTopicWindow() {
     addTopicWindow.setMenu(addCategoryMenu);
   }
 
-  addTopicWindow.on("closed", () => (addTopicWindow = null));
+  addTopicWindow.on('closed', () => (addTopicWindow = null));
 }
 
 function createDeleteCategoryWindow() {
@@ -111,17 +90,17 @@ function createDeleteCategoryWindow() {
     minWidth: 350,
     minHeight: 300,
     parent: mainWindow, // This to disable mainwindow when addtopic open
-    modal: true,        // This to disable mainwindow when addtopic open
+    modal: true, // This to disable mainwindow when addtopic open
     title: 'Delete Category',
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
-      //preload: path.join(__dirname, './preload.js'),
-    }
+      // preload: path.join(__dirname, './preload.js'),
+    },
   });
 
   deleteCategoryWindow.loadURL(
-      isDev
+    isDev
       ? `http://localhost:3000/deletecategory`
       : `file://${__dirname}/index.html#/deletecategory`
   );
@@ -130,7 +109,7 @@ function createDeleteCategoryWindow() {
     deleteCategoryWindow.setMenu(addCategoryMenu);
   }
 
-  deleteCategoryWindow.on("closed", () => (deleteCategoryWindow = null));
+  deleteCategoryWindow.on('closed', () => (deleteCategoryWindow = null));
 }
 
 function createModifyCategoryWindow() {
@@ -140,17 +119,17 @@ function createModifyCategoryWindow() {
     minWidth: 350,
     minHeight: 300,
     parent: mainWindow, // This to disable mainwindow when addtopic open
-    modal: true,        // This to disable mainwindow when addtopic open
+    modal: true, // This to disable mainwindow when addtopic open
     title: 'Modify Category',
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
-      //preload: path.join(__dirname, './preload.js'),
-    }
+      // preload: path.join(__dirname, './preload.js'),
+    },
   });
 
   modifyCategoryWindow.loadURL(
-      isDev
+    isDev
       ? `http://localhost:3000/modifycategory`
       : `file://${__dirname}/index.html#/modifycategory`
   );
@@ -159,7 +138,7 @@ function createModifyCategoryWindow() {
     modifyCategoryWindow.setMenu(addCategoryMenu);
   }
 
-  modifyCategoryWindow.on("closed", () => (modifyCategoryWindow = null));
+  modifyCategoryWindow.on('closed', () => (modifyCategoryWindow = null));
 }
 
 function createModifyTopicWindow() {
@@ -169,17 +148,17 @@ function createModifyTopicWindow() {
     minWidth: 350,
     minHeight: 300,
     parent: mainWindow, // This to disable mainwindow when addtopic open
-    modal: true,        // This to disable mainwindow when addtopic open
+    modal: true, // This to disable mainwindow when addtopic open
     title: 'Modify Topic',
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
-      //preload: path.join(__dirname, './preload.js'),
-    }
+      // preload: path.join(__dirname, './preload.js'),
+    },
   });
 
   modifyTopicWindow.loadURL(
-      isDev
+    isDev
       ? `http://localhost:3000/modifytopic`
       : `file://${__dirname}/index.html#/modifytopic`
   );
@@ -188,7 +167,7 @@ function createModifyTopicWindow() {
     modifyTopicWindow.setMenu(addCategoryMenu);
   }
 
-  modifyTopicWindow.on("closed", () => (modifyTopicWindow = null));
+  modifyTopicWindow.on('closed', () => (modifyTopicWindow = null));
 }
 
 function createDeleteTopicWindow() {
@@ -198,17 +177,17 @@ function createDeleteTopicWindow() {
     minWidth: 350,
     minHeight: 500,
     parent: mainWindow, // This to disable mainwindow when addtopic open
-    modal: true,        // This to disable mainwindow when addtopic open
+    modal: true, // This to disable mainwindow when addtopic open
     title: 'Delete Topic',
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
-      //preload: path.join(__dirname, './preload.js'),
-    }
+      // preload: path.join(__dirname, './preload.js'),
+    },
   });
 
   deleteTopicWindow.loadURL(
-      isDev
+    isDev
       ? `http://localhost:3000/deletetopic`
       : `file://${__dirname}/index.html#/deletetopic`
   );
@@ -217,7 +196,7 @@ function createDeleteTopicWindow() {
     deleteTopicWindow.setMenu(addCategoryMenu);
   }
 
-  deleteTopicWindow.on("closed", () => (deleteTopicWindow = null));
+  deleteTopicWindow.on('closed', () => (deleteTopicWindow = null));
 }
 
 function createMarkdownHelpWindow() {
@@ -230,11 +209,11 @@ function createMarkdownHelpWindow() {
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
-    }
+    },
   });
 
   markdownHelpWindow.loadURL(
-      isDev
+    isDev
       ? `http://localhost:3000/markdownhelp`
       : `file://${__dirname}/index.html#/markdownhelp`
   );
@@ -243,10 +222,131 @@ function createMarkdownHelpWindow() {
     markdownHelpWindow.setMenu(addCategoryMenu);
   }
 
-  markdownHelpWindow.on("closed", () => (markdownHelpWindow = null));
+  markdownHelpWindow.on('closed', () => (markdownHelpWindow = null));
 }
 
-app.on("ready", createWindow);
+const menuTemplate = [
+  {
+    label: 'Menu',
+    submenu: [
+      {
+        label: 'Home',
+        click() {
+          mainWindow.loadURL(
+            isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`
+          );
+        },
+      },
+      {
+        label: 'Check Server Status',
+        enabled: false,
+        click() {},
+      },
+      {
+        label: 'Sync with Server',
+        enabled: false,
+        click() {},
+      },
+      {
+        label: 'Exit',
+        accelerator: process.platform === 'win32' ? 'Alt+F4' : 'Cmd+Q',
+        click() {
+          app.quit();
+        },
+      },
+    ],
+  },
+  {
+    label: 'Category',
+    submenu: [
+      {
+        label: 'Insert Category',
+        click() {
+          createAddCategoryWindow();
+        },
+      },
+      {
+        label: 'Delete Category',
+        click() {
+          createDeleteCategoryWindow();
+        },
+      },
+      {
+        label: 'Modify Category Name',
+        click() {
+          createModifyCategoryWindow();
+        },
+      },
+    ],
+  },
+  {
+    label: 'Topic',
+    submenu: [
+      {
+        label: 'Insert Topic',
+        click() {
+          if (topicMenuActive) createAddTopicWindow();
+        },
+      },
+      {
+        label: 'Edit Topic',
+        click() {
+          if (topicMenuActive) mainWindow.webContents.send('editComment', '');
+        },
+      },
+      {
+        label: 'Delete Topic',
+        click() {
+          if (topicMenuActive) createDeleteTopicWindow();
+        },
+      },
+      {
+        label: 'Modify Topic Name',
+        click() {
+          if (topicMenuActive) createModifyTopicWindow();
+        },
+      },
+    ],
+  },
+  {
+    label: 'Help',
+    submenu: [
+      {
+        label: 'Markdown tags',
+        click() {
+          createMarkdownHelpWindow();
+        },
+      },
+    ],
+  },
+];
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 680,
+    minWidth: 840,
+    minHeight: 560,
+    title: 'Developer Help',
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+    },
+  });
+  mainWindow.loadURL(
+    isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`
+  );
+
+  mainWindow.on('close', () => {
+    app.quit();
+    mainWindow = null;
+  });
+
+  const mainMenu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(mainMenu);
+}
+
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -260,19 +360,18 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('closeAddCategory', (event, arg) => {
+ipcMain.on('closeAddCategory', () => {
   addCategoryWindow.close();
 });
 
-ipcMain.on('closeAddTopic', (event, arg) => {
+ipcMain.on('closeAddTopic', () => {
   addTopicWindow.close();
 });
 
 ipcMain.on('activateTopicMenu', (event, arg) => {
   topicMenuActive = true;
   currentCat = arg;
-  global.electroncategory = {category: arg};
-
+  global.electroncategory = { category: arg };
 });
 
 ipcMain.on('addCategory', (event, arg) => {
@@ -281,7 +380,7 @@ ipcMain.on('addCategory', (event, arg) => {
   db.create({
     topictype: 'bt',
     topictext: arg,
-    topicgroup: arg
+    topicgroup: arg,
   });
 
   mainWindow.reload();
@@ -305,27 +404,22 @@ ipcMain.on('updateTopic', (event, arg) => {
 });
 
 ipcMain.on('updateComment', (event, arg) => {
-
   db.updateComment(arg);
 
   mainWindow.reload();
 });
 
 ipcMain.on('upTopicComment', (event, arg) => {
-
   db.upSaveComment(arg);
 
   mainWindow.reload();
 });
 
 ipcMain.on('downTopicComment', (event, arg) => {
-
   db.downSaveComment(arg);
 
   mainWindow.reload();
 });
-
-
 
 ipcMain.on('deleteTopic', (event, arg) => {
   deleteTopicWindow.close();
@@ -344,7 +438,6 @@ ipcMain.on('deleteCategory', (event, arg) => {
 });
 
 ipcMain.on('deleteComment', (event, arg) => {
-
   db.deleteTopic(arg);
 
   mainWindow.reload();
@@ -354,7 +447,7 @@ ipcMain.on('addTopic', (event, arg) => {
   db.create({
     topictype: 'topic',
     topictext: arg.text,
-    topicgroup: currentCat
+    topicgroup: currentCat,
   });
 
   addTopicWindow.close();
@@ -367,131 +460,34 @@ ipcMain.on('addTopicComment', (event, arg) => {
     topictext: arg.text,
     topicparent: arg.topicparent,
     order: arg.order,
-    topicgroup: arg.topicgroup
+    topicgroup: arg.topicgroup,
   });
 
   mainWindow.reload();
 });
 
-const menuTemplate = [
-    {
-      label: 'Menu',
-      submenu: [
-        {
-          label: 'Home',
-          click() {
-            mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`);            
-          }
-        },
-        {
-          label: 'Check Server Status',
-          enabled: false,
-          click() {
-              
-          }
-        },
-        {
-          label: 'Sync with Server',
-          enabled: false,
-          click() {
-              
-          }
-        },
-          {
-            label: 'Exit',
-            accelerator: process.platform === 'win32' ? 'Alt+F4' : 'Cmd+Q',
-            click() {
-                app.quit();
-            }
-          }
-      ]
-    },
-    {
-      label: 'Category',
-      submenu: [
-        {
-          label: 'Insert Category',
-          click() {
-            createAddCategoryWindow();
-          }
-        },
-        {
-          label: 'Delete Category',
-          click() {
-            createDeleteCategoryWindow();
-          }
-        },
-        {
-          label: 'Modify Category Name',
-          click() {
-            createModifyCategoryWindow();
-        }
-      }
-      ]
-  },
-  {
-    label: 'Topic',
-    submenu: [
-        {
-            label: 'Insert Topic',
-            click() {
-              if (topicMenuActive) createAddTopicWindow();
-            }
-        },
-        {
-          label: 'Edit Topic',
-          click() {
-            if (topicMenuActive) mainWindow.webContents.send('editComment', '');
-          }
-      },
-        {
-          label: 'Delete Topic',
-          click() {
-            if (topicMenuActive) createDeleteTopicWindow();
-          }
-      },
-      {
-        label: 'Modify Topic Name',
-        click() {
-          if (topicMenuActive) createModifyTopicWindow();
-        }
-    }
-    ]
-},
-{
-  label: 'Help',
-  submenu: [
-      {
-          label: 'Markdown tags',
-          click() {
-            createMarkdownHelpWindow();
-          }
-      },
-  ]
-}
-];
-
-if (process.platform === 'darwin') {  
-    menuTemplate.unshift({});        
+if (process.platform === 'darwin') {
+  menuTemplate.unshift({});
 }
 
 if (process.env.NODE_ENV !== 'production') {
-    const devTemplate = {
-        label: 'Dev',
-        submenu: [
-            { role: 'reload' },  
-            {
-                label: 'Debug',
-                accelerator: process.platform === 'win32' ? 'Ctrl+Shift+I' : 'Cmd+Alt+I',
-                click(item, focusedWindow) {
-                    focusedWindow.toggleDevTools();
-                }
-            }
-        ]
-    };
+  const devTemplate = {
+    label: 'Dev',
+    submenu: [
+      { role: 'reload' },
+      {
+        label: 'Debug',
+        accelerator:
+          process.platform === 'win32' ? 'Ctrl+Shift+I' : 'Cmd+Alt+I',
+        click(item, focusedWindow) {
+          focusedWindow.toggleDevTools();
+        },
+      },
+    ],
+  };
 
-    menuTemplate.push(devTemplate);
-    if (process.platform !== 'darwin') {
-        addCategoryMenu = Menu.buildFromTemplate([devTemplate]);
-    }
+  menuTemplate.push(devTemplate);
+  if (process.platform !== 'darwin') {
+    addCategoryMenu = Menu.buildFromTemplate([devTemplate]);
+  }
 }

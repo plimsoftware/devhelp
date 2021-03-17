@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-margin-top: 20px;
-margin-left: 20px;
-margin-bottom: 100px;
-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 100px;
+  color: black;
 
-div {
+  div {
     margin-top: 10px;
-}
+  }
 
-button {
+  button {
     margin-top: 5px;
     width: 98%;
     height: 30px;
@@ -23,5 +23,4 @@ button {
     color: black;
     text-align: left;
   }
-
 `;

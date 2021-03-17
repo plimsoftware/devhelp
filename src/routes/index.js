@@ -22,5 +22,5 @@ export default function Routes() {
       <Route exact path="/modifytopic" component={ModifyTopic} />
       <Route exact path="/markdownhelp" component={MarkdownHelp} />
     </Switch>
-  )
+  );
 }

@@ -7,16 +7,19 @@ import GlobalStyle from './styles/GlobalStyles';
 
 function App() {
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-     return   <BrowserRouter history={history}>
-                  <Routes />
-                  <GlobalStyle />
-              </BrowserRouter>
-  } else {
-      return  <HashRouter history={history}>
-                  <Routes />
-                  <GlobalStyle />
-              </HashRouter>
+    return (
+      <BrowserRouter history={history}>
+        <Routes />
+        <GlobalStyle />
+      </BrowserRouter>
+    );
   }
+  return (
+    <HashRouter history={history}>
+      <Routes />
+      <GlobalStyle />
+    </HashRouter>
+  );
 }
 
 export default App;

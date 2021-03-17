@@ -21,7 +21,7 @@ export const Container = styled.section`
     width: 100%;
     height: 30px;
     border-radius: 10px;
-    background-color: #3E2776;
+    background-color: #3e2776;
     color: white;
   }
 `;

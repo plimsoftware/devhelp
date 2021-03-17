@@ -10,7 +10,8 @@ export const Container = styled.section`
     margin-right: 5px;
   }
 
-  input{
+  input {
+    margin-left: 5px;
     width: 160px;
   }
 
@@ -19,7 +20,7 @@ export const Container = styled.section`
     margin-top: 15px;
     width: 100px;
     border-radius: 10px;
-    background-color: #3E2776;
+    background-color: #3e2776;
     color: white;
   }
 `;
