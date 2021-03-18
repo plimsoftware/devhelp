@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import EllipsisText from 'react-ellipsis-text';
 
 import { Container } from './styled';
+import DetailCategoryDelete from '../../components/DetailCategoryDelete';
 
-const { ipcRenderer, remote } = window.require('electron');
+const { remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
 
 export default function Main() {
   const [categories, setCategories] = useState([]);
-  const [askDelete, setAskDelete] = useState(false);
 
   useEffect(() => {
     dbInstance.readBT().then((allCategorylists) => {
       setCategories(allCategorylists);
     });
   }, []);
-
-  const handleClick = (category) => {
-    ipcRenderer.send('deleteCategory', category);
-  };
 
   return (
     <Container>
@@ -28,17 +23,9 @@ export default function Main() {
           <strong>Warning:</strong> All topics will be deleted
         </h3>
         {categories.length !== 0 ? (
-          categories.map((topic) => (
-            <button
-              type="button"
-              key={topic._id}
-              onClick={() => handleClick(topic)}
-            >
-              <EllipsisText text={topic.topictext} length="40" />
-            </button>
-          ))
+          categories.map((topic) => <DetailCategoryDelete topic={topic} />)
         ) : (
-          <div />
+          <div>Without categories to delete</div>
         )}
       </form>
     </Container>

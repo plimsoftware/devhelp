@@ -86,9 +86,8 @@ function createAddTopicWindow() {
 function createDeleteCategoryWindow() {
   deleteCategoryWindow = new BrowserWindow({
     width: 350,
-    height: 300,
-    minWidth: 350,
-    minHeight: 300,
+    height: 600,
+    resizable: false,
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Delete Category',
@@ -115,9 +114,8 @@ function createDeleteCategoryWindow() {
 function createModifyCategoryWindow() {
   modifyCategoryWindow = new BrowserWindow({
     width: 350,
-    height: 300,
-    minWidth: 350,
-    minHeight: 300,
+    height: 600,
+    resizable: false,
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Modify Category',

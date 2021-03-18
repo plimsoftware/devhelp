@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import EllipsisText from 'react-ellipsis-text';
 import { Container } from './styled';
 
 const { ipcRenderer, remote } = window.require('electron');
@@ -20,6 +21,11 @@ export default function Main() {
     setCatSelected(topic);
   };
 
+  const handleCancel = () => {
+    setCategoryName('');
+    setCatSelected('');
+  };
+
   const handleSubmit = () => {
     ipcRenderer.send('updateCategory', {
       _id: catSelected._id,
@@ -31,7 +37,7 @@ export default function Main() {
   return (
     <Container>
       {catSelected === '' ? (
-        <div>
+        <>
           <h2>Select category to modify</h2>
           {categories.length !== 0 ? (
             categories.map((topic) => (
@@ -40,15 +46,15 @@ export default function Main() {
                 key={topic._id}
                 onClick={() => handleClick(topic)}
               >
-                {topic.topictext}
+                <EllipsisText text={topic.topictext} length={40} />
               </button>
             ))
           ) : (
-            <div />
+            <div>Without categories to modify</div>
           )}
-        </div>
+        </>
       ) : (
-        <div>
+        <>
           <h2>Insert new name</h2>
           <form onSubmit={handleSubmit}>
             <input
@@ -58,8 +64,11 @@ export default function Main() {
               onChange={(e) => setCategoryName(e.currentTarget.value)}
             />
             <button type="submit">Submit</button>
+            <button type="button" onClick={handleCancel}>
+              Cancel
+            </button>
           </form>
-        </div>
+        </>
       )}
     </Container>
   );

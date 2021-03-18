@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.section`
   background-color: #3f63b5;
   padding: 10px;
-  color: black;
-  width: 320px;
+  color: white;
 
   label {
     margin-right: 5px;

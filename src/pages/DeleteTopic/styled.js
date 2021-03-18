@@ -1,22 +1,29 @@
 import styled from 'styled-components';
 
 export const Container = styled.section`
-  background-color: black;
+  background-color: #3f63b5;
   padding: 10px;
   color: white;
-  width: 320px;
-  height: 150px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  label {
-    margin-right: 5px;
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 14px;
+    color: #d17128;
   }
 
   button {
-    margin-right: 5px;
-    margin-top: 15px;
+    margin-top: 10px;
     width: 100%;
+    height: 30px;
     border-radius: 10px;
-    background-color: #330000;
+    background-color: #3e2776;
     color: white;
   }
 `;

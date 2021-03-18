@@ -45,7 +45,7 @@ export default function Main() {
               </button>
             ))
           ) : (
-            <div />
+            <div>Without topics to modify</div>
           )}
         </div>
       ) : (

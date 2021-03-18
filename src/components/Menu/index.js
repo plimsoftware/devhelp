@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EllipsisText from 'react-ellipsis-text';
 
-import { Container, Button, SubContainer } from './styled';
+import { Container, Button } from './styled';
 
 const { ipcRenderer, remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');

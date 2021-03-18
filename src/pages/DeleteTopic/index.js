@@ -33,7 +33,7 @@ export default function Main() {
             </button>
           ))
         ) : (
-          <div />
+          <div>Without topics to delete</div>
         )}
       </form>
     </Container>
