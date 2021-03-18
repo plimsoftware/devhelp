@@ -2,22 +2,32 @@ import React, { useState } from 'react';
 import EllipsisText from 'react-ellipsis-text';
 import Proptype from 'prop-types';
 
-const { ipcRenderer, remote } = window.require('electron');
-const dbInstance = remote.getGlobal('db');
+import { Button, ButtonConfirm } from './styled';
 
+const { ipcRenderer } = window.require('electron');
 export default function DetailCategoryDelete({ topic }) {
   const [askDelete, setAskDelete] = useState(false);
 
-  const askDeleteCat = () => {};
+  const askDeleteCat = () => {
+    setAskDelete(true);
+  };
 
   const handleClick = (category) => {
     ipcRenderer.send('deleteCategory', category);
   };
 
-  return (
-    <button type="button" key={topic._id} onClick={() => handleClick(topic)}>
-      <EllipsisText text={topic.topictext} length={40} />
-    </button>
+  return askDelete === false ? (
+    <Button type="button" key={topic._id} onClick={askDeleteCat}>
+      <EllipsisText text={topic.topictext} length={50} />
+    </Button>
+  ) : (
+    <ButtonConfirm
+      type="button"
+      key={topic._id}
+      onClick={() => handleClick(topic)}
+    >
+      <EllipsisText text={topic.topictext} length={50} />
+    </ButtonConfirm>
   );
 }
 

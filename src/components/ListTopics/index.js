@@ -30,7 +30,7 @@ export default function ListTopics({
 
   return (
     <MainContainer>
-      <h1>Current Category: {category} </h1>
+      <h1>{category} </h1>
       <div>
         {topicList.length !== 0 ? (
           topicList.map((topic) => (

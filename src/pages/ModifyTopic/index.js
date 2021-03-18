@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import EllipsisText from 'react-ellipsis-text';
+
 import { Container } from './styled';
 
 const { ipcRenderer, remote } = window.require('electron');
@@ -41,7 +43,7 @@ export default function Main() {
                 key={topic._id}
                 onClick={() => handleClick(topic)}
               >
-                {topic.topictext}
+                <EllipsisText text={topic.topictext} length={60} />
               </button>
             ))
           ) : (

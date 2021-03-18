@@ -21,7 +21,7 @@ export default function Main() {
         <div className="centered">
           <Menu
             setPage={(page) => setCurrentPage(page)}
-            setCategory={() => setCategory(category)}
+            setCategory={(newCategory) => setCategory(newCategory)}
           />
         </div>
       </div>
@@ -31,9 +31,9 @@ export default function Main() {
           <ListTopics
             category={category}
             setPage={(page) => setCurrentPage(page)}
-            setTitle={() => setTitle(title)}
-            setID={() => setID(id)}
-            setTopicGroup={() => setTopicGroup(topicGroup)}
+            setTitle={(myTitle) => setTitle(myTitle)}
+            setID={(myId) => setID(myId)}
+            setTopicGroup={(myTopicGroup) => setTopicGroup(myTopicGroup)}
           />
         ) : (
           <></>

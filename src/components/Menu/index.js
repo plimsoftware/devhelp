@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EllipsisText from 'react-ellipsis-text';
+import Proptype from 'prop-types';
 
 import { Container, Button } from './styled';
 
@@ -39,3 +40,8 @@ export default function Menu({ setPage, setCategory }) {
     </Container>
   );
 }
+
+Menu.propTypes = {
+  setPage: Proptype.func.isRequired,
+  setCategory: Proptype.func.isRequired,
+};

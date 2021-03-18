@@ -6,19 +6,21 @@ export const MainContainer = styled.div`
   margin-top: 20px;
   margin-left: 20px;
   margin-bottom: 100px;
-  color: white;
+  color: black;
+
+  h1 {
+    font-size: 20px;
+    text-decoration: underline;
+  }
+
+  h2 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
 
   section {
     margin-top: 10px;
-
-    h1 {
-      font-size: 20px;
-    }
-
-    h2 {
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
 
     img {
       max-width: 700px;

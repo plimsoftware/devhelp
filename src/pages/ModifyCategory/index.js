@@ -46,7 +46,7 @@ export default function Main() {
                 key={topic._id}
                 onClick={() => handleClick(topic)}
               >
-                <EllipsisText text={topic.topictext} length={40} />
+                <EllipsisText text={topic.topictext} length={50} />
               </button>
             ))
           ) : (

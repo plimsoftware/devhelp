@@ -9,6 +9,10 @@ export const MainContainer = styled.div`
   margin-bottom: 100px;
   color: black;
 
+  h1 {
+    font-size: 20px;
+  }
+
   div {
     margin-top: 10px;
   }

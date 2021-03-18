@@ -397,7 +397,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
                 Insert Comment
               </button>
             </span>
-            <span>
+            {/* <span>
               <button
                 type="button"
                 className="midButton"
@@ -432,7 +432,7 @@ export default function DetailTopic({ title, id, topicgroup }) {
               >
                 Insert Code JSON
               </button>
-            </span>
+            </span> */}
           </>
         )}
       </div>
