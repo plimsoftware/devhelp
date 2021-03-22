@@ -1,6 +1,7 @@
 ### Version 2.0.0
 
--(VERIFICAR categorias está a apagar repetidos)
+- Layout changed.
+- Redesign insert comment
 - Apagar Markdow help
 
 ### Version 1.4.0

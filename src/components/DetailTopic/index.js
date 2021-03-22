@@ -1,11 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Markdown from 'react-markdown';
 import { FaEdit, FaTimesCircle, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import {
+  BsCardImage,
+  BsLink,
+  BsListOl,
+  BsListUl,
+  BsTable,
+  BsTypeBold,
+  BsTypeH1,
+  BsTypeH2,
+  BsTypeH3,
+  BsTypeItalic,
+  BsTypeStrikethrough,
+  BsTypeUnderline,
+} from 'react-icons/bs';
+import { IoLogoJavascript } from 'react-icons/io';
 import Proptype from 'prop-types';
 import Prism from 'prismjs';
 import './prism.css';
 
-import { MainContainer } from './styled';
+import {
+  MainContainer,
+  Comment,
+  Options,
+  OptionButton,
+  Button,
+} from './styled';
 
 const { ipcRenderer, remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
@@ -19,6 +40,9 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
   const [order, setOrder] = useState(0);
   const [currentID, setCurrentID] = useState('');
   const [myType, setMyType] = useState('');
+  const [commentText, setCommentText] = useState('');
+
+  const commentRef = useRef();
 
   useEffect(() => {
     Prism.highlightAll();
@@ -37,12 +61,8 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
     });
   }, [id, detail.length]);
 
-  function handleInsert(type) {
-    const commentBox = document.createElement('textarea');
-    document.getElementById('detailtopic').appendChild(commentBox);
+  function handleInsert() {
     setEditing(true);
-    setCurrentElement(commentBox);
-    setMyType(type);
   }
 
   const handleDeleteAsk = (e) => {
@@ -126,7 +146,16 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
   const handleCancel = () => {
     setEditing(false);
     setCurrentID(0);
-    currentElement.remove();
+  };
+
+  const handleBold = () => {
+    const startPos = commentRef.current.selectionStart;
+    const endPos = commentRef.current.selectionEnd;
+    const initString = commentText.substring(0, startPos);
+    const middleString = commentText.substring(startPos, endPos);
+    const restString = commentText.substring(endPos, commentText.length);
+    const newValue = `${initString}**${middleString}**${restString}`;
+    setCommentText(newValue);
   };
 
   return (
@@ -182,263 +211,89 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
                   )}
                 </section>
               )}
-              {(topic.topictype === 'code' ||
-                topic.topictype === 'code js') && (
-                <div>
-                  <pre>
-                    <code className="language-javascript">
-                      {topic.topictext}
-                    </code>
-                  </pre>
-                  {editBT && (
-                    <>
-                      <FaArrowUp
-                        size="10"
-                        color="yellow"
-                        title="Move Up"
-                        cursor="pointer"
-                        onClick={() => handleEditUp(topic)}
-                      />
-                      <FaArrowDown
-                        size="10"
-                        color="yellow"
-                        title="Move Down"
-                        cursor="pointer"
-                        onClick={() => handleEditDown(topic)}
-                      />
-                      <FaEdit
-                        size="10"
-                        color="yellow"
-                        title="Modify"
-                        cursor="pointer"
-                        onClick={() => handleEditComment(topic)}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="yellow"
-                        title="Delete"
-                        cursor="pointer"
-                        onClick={handleDeleteAsk}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="red"
-                        title="Confirm Delete"
-                        display="none"
-                        cursor="pointer"
-                        onClick={() => handleDeleteComment(topic)}
-                      />
-                    </>
-                  )}
-                </div>
-              )}
-              {topic.topictype === 'code css' && (
-                <div>
-                  <pre>
-                    <code className="language-css">{topic.topictext}</code>
-                  </pre>
-                  {editBT && (
-                    <>
-                      <FaArrowUp
-                        size="10"
-                        color="yellow"
-                        title="Move Up"
-                        cursor="pointer"
-                        onClick={() => handleEditUp(topic)}
-                      />
-                      <FaArrowDown
-                        size="10"
-                        color="yellow"
-                        title="Move Down"
-                        cursor="pointer"
-                        onClick={() => handleEditDown(topic)}
-                      />
-                      <FaEdit
-                        size="10"
-                        color="yellow"
-                        title="Modify"
-                        cursor="pointer"
-                        onClick={() => handleEditComment(topic)}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="yellow"
-                        title="Delete"
-                        cursor="pointer"
-                        onClick={handleDeleteAsk}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="red"
-                        title="Confirm Delete"
-                        display="none"
-                        cursor="pointer"
-                        onClick={() => handleDeleteComment(topic)}
-                      />
-                    </>
-                  )}
-                </div>
-              )}
-              {topic.topictype === 'code html' && (
-                <div>
-                  <pre>
-                    <code className="language-html">{topic.topictext}</code>
-                  </pre>
-                  {editBT && (
-                    <>
-                      <FaArrowUp
-                        size="10"
-                        color="yellow"
-                        title="Move Up"
-                        cursor="pointer"
-                        onClick={() => handleEditUp(topic)}
-                      />
-                      <FaArrowDown
-                        size="10"
-                        color="yellow"
-                        title="Move Down"
-                        cursor="pointer"
-                        onClick={() => handleEditDown(topic)}
-                      />
-                      <FaEdit
-                        size="10"
-                        color="yellow"
-                        title="Modify"
-                        cursor="pointer"
-                        onClick={() => handleEditComment(topic)}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="yellow"
-                        title="Delete"
-                        cursor="pointer"
-                        onClick={handleDeleteAsk}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="red"
-                        title="Confirm Delete"
-                        display="none"
-                        cursor="pointer"
-                        onClick={() => handleDeleteComment(topic)}
-                      />
-                    </>
-                  )}
-                </div>
-              )}
-              {topic.topictype === 'code json' && (
-                <div>
-                  <pre>
-                    <code className="language-json">{topic.topictext}</code>
-                  </pre>
-                  {editBT && (
-                    <>
-                      <FaArrowUp
-                        size="10"
-                        color="yellow"
-                        title="Move Up"
-                        cursor="pointer"
-                        onClick={() => handleEditUp(topic)}
-                      />
-                      <FaArrowDown
-                        size="10"
-                        color="yellow"
-                        title="Move Down"
-                        cursor="pointer"
-                        onClick={() => handleEditDown(topic)}
-                      />
-                      <FaEdit
-                        size="10"
-                        color="yellow"
-                        title="Modify"
-                        cursor="pointer"
-                        onClick={() => handleEditComment(topic)}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="yellow"
-                        title="Delete"
-                        cursor="pointer"
-                        onClick={handleDeleteAsk}
-                      />
-                      <FaTimesCircle
-                        size="10"
-                        color="red"
-                        title="Confirm Delete"
-                        display="none"
-                        cursor="pointer"
-                        onClick={() => handleDeleteComment(topic)}
-                      />
-                    </>
-                  )}
-                </div>
-              )}
             </span>
           ))
         ) : (
           <div>Without comments available</div>
+        )}
+        {editing && (
+          <>
+            <Options>
+              <OptionButton onClick={handleBold}>
+                <BsTypeBold size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTypeItalic size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTypeUnderline size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTypeH1 size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTypeH2 size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTypeH3 size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTypeStrikethrough size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsListOl size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsListUl size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsCardImage size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsLink size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <IoLogoJavascript size="15" color="black" />
+              </OptionButton>
+              <OptionButton>
+                <BsTable size="15" color="black" />
+              </OptionButton>
+            </Options>
+            <Comment
+              ref={commentRef}
+              placeholder="Insert your comment!"
+              value={commentText}
+              onChange={(e) => setCommentText(e.currentTarget.value)}
+            />
+            <strong>Preview:</strong>
+            <Markdown source={commentText} />
+          </>
         )}
       </section>
       <div>
         {editing ? (
           <>
             <span>
-              <button type="button" onClick={handleSave}>
+              <Button type="button" onClick={handleSave}>
                 Save
-              </button>
+              </Button>
             </span>
             <span>
-              <button type="button" onClick={handleCancel}>
+              <Button type="button" onClick={handleCancel}>
                 Cancel
-              </button>
+              </Button>
             </span>
           </>
         ) : (
           <>
             <span>
-              <button type="button" onClick={() => handleInsert('comment')}>
+              <Button type="button" onClick={() => handleInsert('comment')}>
                 Insert Comment
-              </button>
-              <button type="button" onClick={handleBack}>
+              </Button>
+              <Button type="button" onClick={handleBack}>
                 Back
-              </button>
+              </Button>
             </span>
-            {/* <span>
-              <button
-                type="button"
-                className="midButton"
-                onClick={() => handleInsert('code js')}
-              >
-                Insert Code JavaScript
-              </button>
-            </span>
-            <span>
-              <button
-                type="button"
-                className="midButton"
-                onClick={() => handleInsert('code css')}
-              >
-                Insert Code CSS
-              </button>
-            </span>
-            <span>
-              <button
-                type="button"
-                className="midButton"
-                onClick={() => handleInsert('code html')}
-              >
-                Insert Code HTML
-              </button>
-            </span>
-            <span>
-              <button
-                type="button"
-                className="midButton"
-                onClick={() => handleInsert('code json')}
-              >
-                Insert Code JSON
-              </button>
-            </span> */}
           </>
         )}
       </div>
