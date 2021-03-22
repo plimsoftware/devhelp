@@ -10,7 +10,7 @@ import { MainContainer } from './styled';
 const { ipcRenderer, remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
 
-export default function DetailTopic({ title, id, topicgroup }) {
+export default function DetailTopic({ title, id, topicgroup, setPage }) {
   const [editing, setEditing] = useState(false);
   const [editcomment, setEditComment] = useState(false);
   const [editBT, setEditBT] = useState(false);
@@ -51,6 +51,9 @@ export default function DetailTopic({ title, id, topicgroup }) {
     e.currentTarget.remove();
   };
 
+  const handleBack = () => {
+    setPage('ListTopics');
+  };
   const handleDeleteComment = (comment) => {
     ipcRenderer.send('deleteComment', comment._id);
   };
@@ -396,6 +399,9 @@ export default function DetailTopic({ title, id, topicgroup }) {
               <button type="button" onClick={() => handleInsert('comment')}>
                 Insert Comment
               </button>
+              <button type="button" onClick={handleBack}>
+                Back
+              </button>
             </span>
             {/* <span>
               <button
@@ -444,4 +450,5 @@ DetailTopic.propTypes = {
   title: Proptype.string.isRequired,
   id: Proptype.string.isRequired,
   topicgroup: Proptype.string.isRequired,
+  setPage: Proptype.func.isRequired,
 };

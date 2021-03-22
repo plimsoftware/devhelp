@@ -62,7 +62,7 @@ function createAddTopicWindow() {
     minHeight: 160,
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
-    title: 'Add Topic',
+    title: `Add Topic - ${currentCat}`,
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
@@ -395,8 +395,11 @@ ipcMain.on('updateTopic', (event, arg) => {
   modifyTopicWindow.close();
 
   db.updateTopic(arg);
+  mainWindow.webContents.send('reload');
+});
 
-  mainWindow.reload();
+ipcMain.on('changeTopic', () => {
+  mainWindow.webContents.send('reload');
 });
 
 ipcMain.on('updateComment', (event, arg) => {
@@ -419,10 +422,9 @@ ipcMain.on('downTopicComment', (event, arg) => {
 
 ipcMain.on('deleteTopic', (event, arg) => {
   deleteTopicWindow.close();
+  db.deleteTopic(arg._id);
 
-  db.deleteTopic(arg);
-
-  mainWindow.reload();
+  mainWindow.webContents.send('reload');
 });
 
 ipcMain.on('deleteCategory', (event, arg) => {
@@ -447,7 +449,7 @@ ipcMain.on('addTopic', (event, arg) => {
   });
 
   addTopicWindow.close();
-  mainWindow.reload();
+  mainWindow.webContents.send('reload');
 });
 
 ipcMain.on('addTopicComment', (event, arg) => {

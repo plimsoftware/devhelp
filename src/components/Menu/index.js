@@ -20,6 +20,7 @@ export default function Menu({ setPage, setCategory }) {
     setCategory(category);
     setPage('ListTopics');
     ipcRenderer.send('activateTopicMenu', category);
+    ipcRenderer.send('changeTopic');
   };
 
   return (

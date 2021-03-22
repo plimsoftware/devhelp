@@ -10,12 +10,11 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 180px;
+  width: 170px;
   top: 10px;
   height: 40px;
   border-radius: 10px;
-  background-color: #3E2776;
-  color: #F5F5F5;
+  background-color: #3e2776;
+  color: #f5f5f5;
   margin-bottom: 3px;
 `;
-

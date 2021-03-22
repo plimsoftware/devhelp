@@ -3,7 +3,7 @@ import Proptype from 'prop-types';
 
 import { MainContainer } from './styled';
 
-const { remote } = window.require('electron');
+const { ipcRenderer, remote } = window.require('electron');
 const dbInstance = remote.getGlobal('db');
 
 export default function ListTopics({
@@ -14,12 +14,16 @@ export default function ListTopics({
   setTopicGroup,
 }) {
   const [topicList, setTopicList] = useState([]);
+  const [runOnce, setRunOnce] = useState(false);
 
   useEffect(() => {
-    dbInstance.readTopic(category).then((allTopics) => {
-      setTopicList(allTopics);
-    });
-  }, [category]);
+    ipcRenderer.on('reload', () => setRunOnce(false));
+    if (runOnce === false)
+      dbInstance.readTopic(category).then((allTopics) => {
+        setTopicList(allTopics);
+        setRunOnce(true);
+      });
+  }, [category, runOnce]);
 
   const handleClick = (topic) => {
     setPage('DetailTopic');
