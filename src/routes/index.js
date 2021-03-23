@@ -8,7 +8,6 @@ import ModifyCategory from '../pages/ModifyCategory';
 import AddTopic from '../pages/AddTopic';
 import DeleteTopic from '../pages/DeleteTopic';
 import ModifyTopic from '../pages/ModifyTopic';
-import MarkdownHelp from '../pages/MarkdownHelp';
 
 export default function Routes() {
   return (
@@ -20,7 +19,6 @@ export default function Routes() {
       <Route exact path="/addtopic" component={AddTopic} />
       <Route exact path="/deletetopic" component={DeleteTopic} />
       <Route exact path="/modifytopic" component={ModifyTopic} />
-      <Route exact path="/markdownhelp" component={MarkdownHelp} />
     </Switch>
   );
 }
