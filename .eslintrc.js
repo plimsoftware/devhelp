@@ -22,6 +22,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'no-underscore-dangle': 'off',
+    'no-plusplus': 'off',
     'prettier/prettier': [
       'error',
       {

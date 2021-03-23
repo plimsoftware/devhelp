@@ -1,6 +1,6 @@
 const electron = require('electron');
 
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const { app, BrowserWindow, Menu, ipcMain, shell } = electron;
 const path = require('path');
 const isDev = require('electron-is-dev');
 const db = require('./db/stores/topicItem');
@@ -333,6 +333,11 @@ function createWindow() {
     isDev ? 'http://localhost:3000' : `file://${__dirname}/index.html`
   );
 
+  mainWindow.webContents.on('will-navigate', (e, url) => {
+    e.preventDefault();
+    shell.openExternal(url);
+  });
+
   mainWindow.on('close', () => {
     app.quit();
     mainWindow = null;
@@ -461,7 +466,7 @@ ipcMain.on('addTopicComment', (event, arg) => {
     topicgroup: arg.topicgroup,
   });
 
-  mainWindow.reload();
+  mainWindow.webContents.send('reload');
 });
 
 if (process.platform === 'darwin') {

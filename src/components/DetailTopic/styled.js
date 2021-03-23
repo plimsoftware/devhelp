@@ -19,6 +19,13 @@ export const MainContainer = styled.div`
     font-size: 18px;
   }
 
+  h3 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-style: italic;
+  }
+
   section {
     margin-top: 10px;
 
@@ -40,12 +47,29 @@ export const MainContainer = styled.div`
     white-space: pre-wrap;
   }
 
-  div {
-    margin-top: 10px;
-  }
-
   .midButton {
     width: 24.5% !important;
+  }
+
+  #topic {
+    background-color: #b0e3eb;
+    width: 98%;
+    padding: 5px;
+  }
+
+  tr {
+    border-top: 1px solid #c6cbd1;
+    background: #fff;
+  }
+
+  th,
+  td {
+    padding: 6px 13px;
+    border: 1px solid #b3b9ba;
+  }
+
+  table tr:nth-child(2n) {
+    background: #f6f8fa;
   }
 `;
 
@@ -80,8 +104,40 @@ export const OptionButton = styled.button`
   width: 30px;
   height: 30px;
   display: flex;
+  font-size: 8px;
+  font-weight: bold;
+  margin-top: 10px;
   justify-content: center;
   align-items: center;
   text-align: center;
   cursor: pointer;
+`;
+
+export const SpaceButton = styled.div`
+  width: 30px;
+  height: 30px;
+`;
+
+export const OptionsTable = styled.div`
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;
+  background-color: #a9b3b8;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid grey;
+`;
+
+export const OptionsTablecolumn = styled.div`
+  width: 45px;
+  height: 30px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
+
+export const InputTable = styled.input`
+  font-size: 10px;
+  margin-left: 5px;
 `;
