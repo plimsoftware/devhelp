@@ -2,7 +2,6 @@
 
 - Layout changed.
 - Redesign insert comment
-- Apagar Markdow help
 
 ### Version 1.4.0
 
