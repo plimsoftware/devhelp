@@ -33,7 +33,6 @@ function createAddCategoryWindow() {
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Add Category',
-    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       // preload: path.join(__dirname, './preload.js'),
@@ -62,7 +61,6 @@ function createAddTopicWindow() {
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: `Add Topic - ${currentCat}`,
-    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       // preload: path.join(__dirname, './preload.js'),
@@ -90,7 +88,6 @@ function createDeleteCategoryWindow() {
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Delete Category',
-    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       // preload: path.join(__dirname, './preload.js'),
@@ -118,7 +115,6 @@ function createModifyCategoryWindow() {
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Modify Category',
-    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       // preload: path.join(__dirname, './preload.js'),
@@ -146,7 +142,6 @@ function createModifyTopicWindow() {
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Modify Topic',
-    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       // preload: path.join(__dirname, './preload.js'),
@@ -174,7 +169,6 @@ function createDeleteTopicWindow() {
     parent: mainWindow, // This to disable mainwindow when addtopic open
     modal: true, // This to disable mainwindow when addtopic open
     title: 'Delete Topic',
-    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       // preload: path.join(__dirname, './preload.js'),
@@ -286,6 +280,7 @@ function createWindow() {
     minWidth: 840,
     minHeight: 560,
     title: 'Developer Help',
+    icon: path.join(__dirname, './devhelp.ico'),
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
