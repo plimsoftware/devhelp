@@ -372,19 +372,19 @@ ipcMain.on('changeTopic', () => {
 ipcMain.on('updateComment', (event, arg) => {
   db.updateComment(arg);
 
-  mainWindow.reload();
+  mainWindow.webContents.send('reload');
 });
 
 ipcMain.on('upTopicComment', (event, arg) => {
   db.upSaveComment(arg);
 
-  mainWindow.reload();
+  mainWindow.webContents.send('reload');
 });
 
 ipcMain.on('downTopicComment', (event, arg) => {
   db.downSaveComment(arg);
 
-  mainWindow.reload();
+  mainWindow.webContents.send('reload');
 });
 
 ipcMain.on('deleteTopic', (event, arg) => {
@@ -403,9 +403,7 @@ ipcMain.on('deleteCategory', (event, arg) => {
 });
 
 ipcMain.on('deleteComment', (event, arg) => {
-  db.deleteTopic(arg);
-
-  mainWindow.reload();
+  db.deleteTopic(arg).then(() => mainWindow.webContents.send('reload'));
 });
 
 ipcMain.on('addTopic', (event, arg) => {

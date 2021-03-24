@@ -23,6 +23,8 @@ export default function ListTopics({
         setTopicList(allTopics);
         setRunOnce(true);
       });
+
+    return () => ipcRenderer.removeAllListeners(['reload']);
   }, [category, runOnce]);
 
   const handleClick = (topic) => {

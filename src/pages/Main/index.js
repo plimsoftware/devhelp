@@ -17,6 +17,7 @@ export default function Main() {
   return (
     <Container>
       <Header />
+
       <div className="split left">
         <div className="centered">
           <Menu

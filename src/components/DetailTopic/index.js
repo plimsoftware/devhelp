@@ -38,7 +38,6 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
   const [editing, setEditing] = useState(false);
   const [editcomment, setEditComment] = useState(false);
   const [editBT, setEditBT] = useState(false);
-  const [currentElement, setCurrentElement] = useState('');
   const [detail, setDetail] = useState([]);
   const [order, setOrder] = useState(0);
   const [currentID, setCurrentID] = useState('');
@@ -64,25 +63,31 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
   };
 
   useEffect(() => {
-    ipcRenderer.on('reload', () => setRunOnce(false));
     Prism.highlightAll();
 
+    ipcRenderer.on('reload', () => setRunOnce(false));
+    ipcRenderer.on('editComment', () => {
+      setEditBT(!editBT);
+    });
+
     if (runOnce === false) {
-      dbInstance.readTopicDetail(id).then((allTopics) => {
-        setDetail(allTopics);
-      });
+      dbInstance
+        .readTopicDetail(id)
+        .then((allTopics) => {
+          setDetail(allTopics);
 
-      if (detail.length > 0)
-        dbInstance.readTopicMax(id).then((topicMax) => {
-          setOrder(Number(topicMax[0].order));
-        });
+          if (allTopics.length > 0)
+            dbInstance.readTopicMax(id).then((topicMax) => {
+              setOrder(Number(topicMax[0].order));
+            });
+        })
+        .then(() => Prism.highlightAll());
 
-      ipcRenderer.on('editComment', () => {
-        setEditBT(true);
-      });
       setRunOnce(true);
     }
-  }, [id, detail.length, runOnce]);
+
+    return () => ipcRenderer.removeAllListeners(['reload', 'editComment']);
+  }, [id, runOnce, editBT]);
 
   function handleInsert() {
     setEditing(true);
@@ -104,13 +109,11 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
   };
 
   const handleEditComment = (comment) => {
-    const commentBox = document.createElement('textarea');
-    commentBox.value = comment.topictext;
-    document.getElementById('detailtopic').appendChild(commentBox);
     setEditing(true);
-    setCurrentElement(commentBox);
     setEditComment(true);
+    setCommentText(comment.topictext);
     setCurrentID(comment._id);
+    setTimeout(() => Prism.highlightAll(), 1000);
   };
 
   const handleEditUp = (comment) => {
@@ -129,6 +132,12 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
           actualComment: comment._id,
           order: comment.order,
         });
+
+      setEditing(false);
+      setRunOnce(false);
+      setEditBT(false);
+      setCurrentID(0);
+      setCommentText('');
     });
   };
 
@@ -148,6 +157,12 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
           actualComment: comment._id,
           order: comment.order,
         });
+
+      setEditing(false);
+      setRunOnce(false);
+      setEditBT(false);
+      setCurrentID(0);
+      setCommentText('');
     });
   };
 
@@ -164,14 +179,19 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
       });
 
       setEditing(false);
-      setRunOnce(true);
+      setRunOnce(false);
       setCurrentID(0);
       setCommentText('');
     } else {
       ipcRenderer.send('updateComment', {
-        topictext: currentElement.value,
+        topictext: commentText,
         _id: currentID,
       });
+
+      setEditing(false);
+      setRunOnce(false);
+      setCurrentID(0);
+      setCommentText('');
     }
   };
 
@@ -315,28 +335,28 @@ export default function DetailTopic({ title, id, topicgroup, setPage }) {
                     <>
                       <FaArrowUp
                         size="10"
-                        color="yellow"
+                        color="black"
                         title="Move Up"
                         cursor="pointer"
                         onClick={() => handleEditUp(topic)}
                       />
                       <FaArrowDown
                         size="10"
-                        color="yellow"
+                        color="black"
                         title="Move Down"
                         cursor="pointer"
                         onClick={() => handleEditDown(topic)}
                       />
                       <FaEdit
                         size="10"
-                        color="yellow"
+                        color="black"
                         title="Modify"
                         cursor="pointer"
                         onClick={() => handleEditComment(topic)}
                       />
                       <FaTimesCircle
                         size="10"
-                        color="yellow"
+                        color="black"
                         title="Delete"
                         cursor="pointer"
                         onClick={handleDeleteAsk}
