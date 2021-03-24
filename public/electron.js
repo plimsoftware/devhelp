@@ -280,7 +280,7 @@ function createWindow() {
     minWidth: 840,
     minHeight: 560,
     title: 'Developer Help',
-    icon: path.join(__dirname, './devhelp.ico'),
+    icon: path.join(__dirname, './devhelp.png'),
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
